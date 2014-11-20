@@ -3,7 +3,7 @@
 
 _artist: Michael Firman http://www.firmanproductions.com/_
 
-We're looking for full-stack developers that are hungry to learn and can deliver functioning products. You got this far because we think you have those qualities, so now it's time to prove it. Write a simple AngularJS application that allows CRUD (create, read, update, delete).
+We're looking for full-stack developers that are hungry to learn and can deliver functioning products. You got this far because we think you have those qualities, so now it's time to prove it. Make a new branch on this repo (do not fork it), called YOURNAME. Then write a simple AngularJS application that allows CRUD (create, read, update, delete).
 
 #### Requirements
 The application should accomplish the following tasks:
