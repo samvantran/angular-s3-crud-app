@@ -2,6 +2,7 @@
   "name": "Yellowhammer Interview Test Flight",
   "version": "0.0.1",
   "dependencies": {
-    "angular": "latest"
+    "angular":    "latest",
+    "aws-sdk-js": "latest
   }
 }
