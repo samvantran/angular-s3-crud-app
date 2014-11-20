@@ -3,6 +3,6 @@
   "version": "0.0.1",
   "dependencies": {
     "angular":    "latest",
-    "aws-sdk-js": "latest
+    "aws-sdk-js": "latest"
   }
 }
