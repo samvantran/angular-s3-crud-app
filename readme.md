@@ -13,12 +13,12 @@ The application should accomplish the following tasks:
 - A user can change the name of a file they have uploaded (update)
 - A user can delete a file that they have uploaded (delete)
 
-Feel free to employ any UI/UX patterns that you like, as long as you can justify your decisions. This should be a challenging exercise on its own, but feel free to take it as far as you can.
+Feel free to employ any UI/UX patterns that you like, as long as you can justify your decisions.
 
 #### Bonuses
-Here are some bonuses that would make you stand out:
+This should be a challenging exercise on its own, but if you are absolutely crushing it, here are some extras that would make you stand out:
   - tests -- unit tests or integration tests; if you can get a test suite up and running and have a couple of meaningful tests, we will be very impressed
-  - styling/design -- it doesn't have to be [worrydream.com](worrydream.com), but you want users to actually use it
+  - styling/design -- it doesn't have to be [worrydream.com](http://www.worrydream.com), but you want users to actually use it
   - a build process -- use gulp or grunt to concatenate your application code with all of your dependencies, minify/uglify, run JSLint, etc
   - extra features -- sorting (by file name, file size, file type, etc); allow a user to add category to their upload and to organize their list by categories; drag-and-drop; file preview thumbnails; something else you think would be cool!
   - put it in a Docker image: [https://docs.docker.com/](https://docs.docker.com/)
