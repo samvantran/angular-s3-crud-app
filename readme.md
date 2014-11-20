@@ -3,7 +3,7 @@
 
 _artist: Michael Firman http://www.firmanproductions.com/_
 
-We're looking for full-stack developers that are hungry to learn and can deliver functioning products. Write a simple AngularJS application that allows CRUD (create, read, update, delete).
+We're looking for full-stack developers that are hungry to learn and can deliver functioning products. You got this far because we think you have those qualities, so now it's time to prove it. Write a simple AngularJS application that allows CRUD (create, read, update, delete).
 
 #### Requirements
 The application should accomplish the following tasks:
@@ -44,7 +44,7 @@ We set up an Amazon S3 (Simple Storage Service) bucket for you to work with. Lea
 2) in your application, include these configs
 ```javascript
 AWS.config.update({
-    accessKeyId:     '<ACCESS KEY>', 
+    accessKeyId:     '<ACCESS KEY ID>', 
     secretAccessKey: '<SECRET KEY>' // replace these credentials with the keys provided to you
   });
 ```
