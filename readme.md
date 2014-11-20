@@ -1,7 +1,7 @@
 # Yellowhammer Code Test Flight
 ![sweet picture](http://img1.wikia.nocookie.net/__cb20131125081250/steamtradingcards/images/thumb/b/b5/Gun_Monkeys_Artwork_1.jpg/800px-Gun_Monkeys_Artwork_1.jpg)
 
-_source: [http://steamtradingcards.wikia.com/wiki/File:Gun_Monkeys_Artwork_1.jpg](http://steamtradingcards.wikia.com/wiki/File:Gun_Monkeys_Artwork_1.jpg)_
+_artist: Michael Firman http://www.firmanproductions.com/_
 
 We're looking for full-stack developers that are hungry to learn and can deliver functioning products. Write a simple AngularJS application that allows CRUD (create, read, update, delete). The application should accomplish the following tasks:
 
