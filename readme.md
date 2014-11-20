@@ -3,15 +3,20 @@
 
 _artist: Michael Firman http://www.firmanproductions.com/_
 
-We're looking for full-stack developers that are hungry to learn and can deliver functioning products. Write a simple AngularJS application that allows CRUD (create, read, update, delete). The application should accomplish the following tasks:
+We're looking for full-stack developers that are hungry to learn and can deliver functioning products. Write a simple AngularJS application that allows CRUD (create, read, update, delete).
 
+#### Requirements
+The application should accomplish the following tasks:
 - A user can upload a file through the web browser (create)
 - A user can view a list of all the files they have uploaded (read) 
 - A user can download any file that they have previously uploaded (read)
 - A user can change the name of a file they have uploaded (update)
 - A user can delete a file that they have uploaded (delete)
 
-Feel free to employ any UI/UX patterns that you like, as long as you can justify your decisions. This should be a challenging exercise on its own, but here are some bonuses that would make you stand out:
+Feel free to employ any UI/UX patterns that you like, as long as you can justify your decisions. This should be a challenging exercise on its own, but feel free to take it as far as you can.
+
+#### Bonuses
+Here are some bonuses that would make you stand out:
   - tests -- unit tests or integration tests; if you can get a test suite up and running and have a couple of meaningful tests, we will be very impressed
   - styling/design -- it doesn't have to be [worrydream.com](worrydream.com), but you want users to actually use it
   - a build process -- use gulp or grunt to concatenate your application code with all of your dependencies, minify/uglify, run JSLint, etc
@@ -21,11 +26,11 @@ Feel free to employ any UI/UX patterns that you like, as long as you can justify
 It's very likely that you can learn the required Angular in a couple of hours. We want to respect your time, so we'll take a look at incomplete submissions. Code quality matters a lot more than code quantity. The end goal is a product that works and is easy to use. By the way, this is a simplified version of a real task that we are currently working on, so hopefully this gives you an idea of whether you'd like coming to work at Yellowhammer. 
 
 ---------------
-## What We're Looking For
+## What We're Looking For (roughly in order of importance)
 
 - a functioning application
 - readable code -- assume that you'll have to give this codebase over to someone in Australia; use sensible names, don't be too clever, pretend you've never heard of bitwise operators
-- well organized code -- a file structure that makes sense
+- well organized code -- e.g. a file structure that makes sense
 - maintainable code -- change is the one constant in software development; your design should make an attempt at modularity (components that can be reused, swapped out, etc)
 - that you had fun with it -- we love programming and learning new tech, we hope you do too
 
@@ -34,7 +39,7 @@ It's very likely that you can learn the required Angular in a couple of hours. W
 
 We set up an Amazon S3 (Simple Storage Service) bucket for you to work with. Learning Amazon Web Services is a separate adventure, so here's everything you will need to make it work:
 
-1) include the AWS SDK, either directly through the URL https://sdk.amazonaws.com/js/aws-sdk-2.0.27.min.js, or as part of your build process in your bower.json file. Look in the repo for an example
+1) include the AWS SDK, either directly through the URL https://sdk.amazonaws.com/js/aws-sdk-2.0.27.min.js, or as part of your build process in your bower.json file. Look in the repo for an example.
 
 2) in your application, include these configs
 ```javascript
@@ -93,7 +98,7 @@ bucket.listObjects({
   }
 });
 ```
-You can access your uploads using a URL: http://yh.interview.s3.amazon.com/YOURNAME/filename.jpg. You could, for example, use it in an anchor tag or as the src attribute in an img tag: 
+You can access your uploads with a URL: http://yh.interview.s3.amazon.com/YOURNAME/filename.jpg. You could, for example, use it in an anchor tag or as the src attribute in an img tag: 
 ```html
 <img src="http://yh.interview.s3.amazon.com/YOURNAME/filename.jpg">
 ```
@@ -106,4 +111,5 @@ A question to think about: what if we want to change our service provider? How c
 - You'll have to spend some time learning the basics of Angular. Their tutorial is good: [https://docs.angularjs.org/tutorial](https://docs.angularjs.org/tutorial). 
 - Egghead.io Angular screencasts: [https://egghead.io/series/angularjs-app-from-scratch-getting-started](https://egghead.io/series/angularjs-app-from-scratch-getting-started)
 - npm: [npmjs.org](https://www.npmjs.org). Use libraries. Find the right tool for the job.
-- AWS Javascript SDK: [http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html](http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html). If you're nuts.
+- AWS Javascript SDK: [http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html](http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html). Go nuts.
+- we welcome questions: Joe / joconor@yhmg.com, James / jtong@yhmg.com
