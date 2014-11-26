@@ -98,9 +98,9 @@ bucket.listObjects({
   }
 });
 ```
-You can access your uploads with a URL: http://yh.interview.s3.amazon.com/YOURNAME/filename.jpg. You could, for example, use it in an anchor tag or as the src attribute in an img tag: 
+You can access your uploads with a URL: http://yh.interview.s3.amazonaws.com/YOURNAME/filename.jpg. You could, for example, use it in an anchor tag or as the src attribute in an img tag: 
 ```html
-<img src="http://yh.interview.s3.amazon.com/YOURNAME/filename.jpg">
+<img src="http://yh.interview.s3.amazonaws.com/YOURNAME/filename.jpg">
 ```
 
 A question to think about: what if we want to change our service provider? How can we minimize the impact to our application (i.e. change the least amount of code) if we decide to not use AWS anymore? Do not hesitate to get in touch with us if you have questions about this or something doesn't work for you. 
