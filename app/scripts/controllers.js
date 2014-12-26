@@ -27,22 +27,36 @@ app.controller('MainCtrl', ['$scope', function($scope, $q) {
       console.log(data);
     }})
 
-  $scope.updateList = function() {
-    alert($scope.files.length);
-    return $scope.files;
-  }
+  // $scope.updateList = function() {
+  //   alert($scope.files.length);
+  //   return $scope.files;
+  // }
 
-  $scope.uploadFileToAWS = function() {
+  $scope.uploadFileToS3 = function() {
     var file = document.getElementById('fileUpload').files[0];
 
-    s3.putObject({
-      Key: "samtran/"+file.name,
-      ACL: "public-read", // must include exactly as is, this allows you to get the uploaded file from your browser
+    var params = {
+      Key: "samtran/" + file.name,
+      ACL: "public-read", // must include as is; allows you to get the uploaded file from browser
       Body: file 
-      }, function(err, data) {
-        if (err)  { console.log(err);  }
-        if (data) { console.log(data); }
+    }
+    
+    s3.putObject(params, function(err, data) {
+      if (err) { console.log(err);  }
+      else     { console.log(data); }
     })
+  }
+
+  $scope.deleteFileFromS3 = function(file) {
+    var params = {
+      Bucket: $scope.creds.bucket, /* required */
+      Key: file.Key,               /* required */
+    };
+
+    s3.deleteObject(params, function(err, data) {
+      if (err) { console.log(err, err.stack); } // an error occurred
+      else     { console.log(data); }           // successful response
+    });
   }
 
 }]);
