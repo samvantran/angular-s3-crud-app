@@ -1,16 +1,82 @@
 <!DOCTYPE html>
 <html ng-app="Yellowhammer">
   <head>
+    <title>Yellowhammer Test Flight</title>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/app.css">
+    
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular.min.js"></script>
     <script src="http://code.angularjs.org/1.2.0-rc.3/angular-route.min.js"></script>
-
-    <title>Yellowhammer Test Flight</title>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.27.min.js"></script>
   </head>
   <body ng-controller="MainCtrl">
-    <div ng-view></div>
+    <div class="container-fluid">
+      <div class="page-header no-top-marg">
+        <h1>Manage your Files with Angular & S3</h1>
+      </div>
 
+      <!-- Login Section -->
+      <div class="row">
+        <!-- AWS Details-->
+        <div class="col-md-4">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Input Your AWS Details</h3>
+            </div>
+            <div class="panel-body">
+              <form role="form" ng-submit="loginToAWS(creds.access_key, creds.secret_key, creds.bucket); updateList()">
+                <div class="input-group bottom-marg-10">
+                  <span class="input-group-addon">ACCESS KEY</span>
+                  <input ng-model="creds.access_key" type="text" class="form-control" placeholder="1234567890">
+                </div>
+                <div class="input-group bottom-marg-10">
+                  <span class="input-group-addon">SECRET KEY</span>
+                  <input ng-model="creds.secret_key" type="text" class="form-control" placeholder="123SECRETKEY">
+                </div>
+                <div class="input-group bottom-marg-10">
+                  <span class="input-group-addon">BUCKET</span>
+                  <input ng-model="creds.bucket" type="text" class="form-control" placeholder="yh.interview">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block btn-lg">Login</button>
+              </form>
+            </div>
+          </div>
+        </div> 
+
+        <!-- File Listings Section -->
+        <div class="col-md-8">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Your Files</h3>
+            </div>
+            <div class="panel-body">
+              <ul class="nav nav-sidebar">
+                <li ng-repeat="file in files">{{file}}
+                  <button class="pull-right" type="button" ng-click="deleteFile(file)" class="close">&times;</button>
+                </li>
+              </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Upload Form -->
+      <div class="row">
+        <div class="col-md-4">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Upload A File</h3>
+            </div>
+            <div class="panel-body">
+              <input class="bottom-marg-15" type="file" id="fileUpload"></input>         
+              <a class="btn btn-primary btn-block btn-lg" ng-click="uploadFile(); updateList()">Upload</a>
+            </div>
+          </div>
+        </div>     
+      </div>
+    </div>
 
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers.js"></script>
