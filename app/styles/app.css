@@ -1,0 +1,8 @@
+.no-top-marg       { margin-top:    0;    }
+.bottom-marg-10    { margin-bottom: 10px; }
+.bottom-marg-15    { margin-bottom: 15px; }
+.top-marg-10       { margin-top:    10px; }
+.left-marg-10      { margin-left:   10px; }
+.input-group-addon { min-width:     120px;}
+
+ul li { list-style-type: none; }

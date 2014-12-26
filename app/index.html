@@ -49,15 +49,20 @@
         <div class="col-md-8">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">Your Files{{creds.access_key}}</h3>
+              <h3 class="panel-title">Your Files</h3>
             </div>
             <div class="panel-body">
-              <ul>
+              <ul ng-model="files">
+                <form role="form" ng-if="isEditing" ng-submit="editFileName(); stopEditing()">
+                  <input type="text" name="text" ng-model="fileName">
+                  <input type="submit">
+                  <button ng-click="stopEditing()" class="btn btn-danger">&times;</button>
+                </form>
                 <li ng-repeat="file in files">
-                  <button type="button" ng-click="setEditedBookmark(bookmark); startEditing()" class="btn btn-link">
+                  <button type="button" ng-click="showEditForm(file)" class="btn btn-link">
                     <span class="glyphicon glyphicon-pencil"></span></button>
-                    <a href="http://yh.interview.s3.amazonaws.com/{{file.Key}}">{{file.Key}}</a>
-                  <button class="pull-right" type="button" ng-click="deleteFileFromS3(file)" class="close">&times;</button>
+                    <a href="http://yh.interview.s3.amazonaws.com/{{file}}">{{file}}</a>
+                  <button type="button" ng-click="deleteFileFromS3(file)" class="pull-right close">&times;</button>
                 </li>
               </ul>
           </div>
@@ -73,8 +78,9 @@
               <h3 class="panel-title">Upload A File</h3>
             </div>
             <div class="panel-body">
-              <input class="bottom-marg-15" type="file" id="fileUpload"></input>         
-              <a class="btn btn-primary btn-block btn-lg" ng-click="uploadFileToS3(); updateList()">Upload</a>
+              <form id="uploadFileForm" role="form" ng-submit="uploadFileToS3()">
+              <input class="bottom-marg-15" type="file" id="fileUpload"></input>      
+              <button class="btn btn-primary btn-block btn-lg" type="submit">Upload</button>
             </div>
           </div>
         </div>     
