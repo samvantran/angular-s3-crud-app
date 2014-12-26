@@ -53,7 +53,7 @@
             </div>
             <div class="panel-body">
               <ul class="nav nav-sidebar">
-                <li ng-repeat="file in files">{{file}}
+                <li ng-repeat="file in files"><a href="http://yh.interview.s3.amazonaws.com/{{file.Key}}">{{file}}</a>
                   <button class="pull-right" type="button" ng-click="deleteFile(file)" class="close">&times;</button>
                 </li>
               </ul>
