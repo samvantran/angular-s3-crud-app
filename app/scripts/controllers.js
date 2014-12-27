@@ -1,3 +1,5 @@
+'use strict';
+
 var app = angular.module('Yellowhammer', []);
 
 app.controller('MainCtrl', ['$scope', function($scope) {
@@ -62,10 +64,10 @@ app.controller('MainCtrl', ['$scope', function($scope) {
 
   $scope.editFileName = function() {
     // To edit file name in S3: 
-    // 1. GET old file
+    // 1. GET old file & copy it
     // 2. change name
-    // 3. PUT new file
-    // 4. then DELETE old file
+    // 3. DELETE old file
+    // 4. PUT new file
 
     var fileCopy;
     $scope.fileName = this.fileName;
