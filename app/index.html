@@ -4,12 +4,11 @@
     <title>Yellowhammer Test Flight</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles/app.css">
     
-    <script src="../bower_components/angular/angular.min.js"></script>
-    <script src="http://code.angularjs.org/1.2.0-rc.3/angular-route.min.js"></script>
-    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.27.min.js"></script>
   </head>
   <body ng-controller="MainCtrl">
     <div class="container-fluid">
@@ -85,6 +84,9 @@
       </div>
     </div>
 
+    <!-- javascripts -->
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/aws-sdk-js/dist/aws-sdk.min.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers.js"></script>
 
