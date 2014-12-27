@@ -1,12 +1,9 @@
-angular.module('Yellowhammer', [
-  'ngRoute',
-  'Yellowhammer.services',
-  'Yellowhammer.directives'])
+angular.module('Yellowhammer', [])
 .config(function($routeProvider) {
   $routeProvider
   .when('/', {
     controller: 'MainCtrl',
-    templateUrl: 'templates/main.html',
+    templateUrl: 'app/index.html',
   })
   .otherwise({
     redirectTo: '/'

@@ -14,26 +14,25 @@
   <body ng-controller="MainCtrl">
     <div class="container-fluid">
       <div class="page-header no-top-marg">
-        <h1>Manage your Files with Angular & S3</h1>
+        <h1>Yellowhammer: Manage your Files with Angular & S3</h1>
       </div>
 
-      <!-- Login Section -->
+      <!-- Login to AWS Section -->
       <div class="row">
-        <!-- AWS Details-->
         <div class="col-md-4">
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">Input Your AWS Details</h3>
             </div>
             <div class="panel-body">
-              <form role="form" ng-submit="loginToAWS(creds.access_key, creds.secret_key, creds.bucket); updateList()">
+              <form role="form" ng-submit="loginToS3(creds.accessKey, creds.secretKey, creds.bucket)">
                 <div class="input-group bottom-marg-10">
                   <span class="input-group-addon">ACCESS KEY</span>
-                  <input ng-model="creds.access_key" type="text" class="form-control" placeholder="1234567890">
+                  <input ng-model="creds.accessKey" type="text" class="form-control" placeholder="1234567890">
                 </div>
                 <div class="input-group bottom-marg-10">
                   <span class="input-group-addon">SECRET KEY</span>
-                  <input ng-model="creds.secret_key" type="text" class="form-control" placeholder="123SECRETKEY">
+                  <input ng-model="creds.secretKey" type="text" class="form-control" placeholder="123SECRETKEY">
                 </div>
                 <div class="input-group bottom-marg-10">
                   <span class="input-group-addon">BUCKET</span>
@@ -52,23 +51,22 @@
               <h3 class="panel-title">Your Files</h3>
             </div>
             <div class="panel-body">
-              <ul ng-model="files">
-                <form role="form" ng-if="isEditing" ng-submit="editFileName(); stopEditing()">
-                  <input type="text" name="text" ng-model="fileName">
-                  <input type="submit">
-                  <button ng-click="stopEditing()" class="btn btn-danger">&times;</button>
-                </form>
+              <form role="form" ng-if="isEditing" ng-submit="editFileName(); stopEditing()">
+                <input type="text" name="text" ng-model="fileName">
+                <button type="submit" class="btn btn-success" ><span class="glyphicon glyphicon-ok"></span></button>
+                <button ng-click="stopEditing()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+              </form>
+              <ul ng-show="files">
                 <li ng-repeat="file in files">
-                  <button type="button" ng-click="showEditForm(file)" class="btn btn-link">
-                    <span class="glyphicon glyphicon-pencil"></span></button>
-                    <a href="http://yh.interview.s3.amazonaws.com/{{file}}">{{file}}</a>
+                  <button type="button" ng-click="showEditForm(file.Key)" class="btn btn-link"><span class="glyphicon glyphicon-pencil"></span></button>
+                  <a href="http://yh.interview.s3.amazonaws.com/{{file.Key}}">{{file.Key}}</a>
                   <button type="button" ng-click="deleteFileFromS3(file)" class="pull-right close">&times;</button>
                 </li>
               </ul>
+            </div>
           </div>
         </div>
       </div>
-    </div>
     
     <!-- Upload Form -->
       <div class="row">
