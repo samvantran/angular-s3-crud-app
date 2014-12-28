@@ -14,12 +14,14 @@ describe('Yellowhammer controllers', function() {
     }));
 
     xit('can retrieve bucket files', inject(function($controller) {
-      var empty = scope.files.length;
+      // var scope = {}, ctrl = $controller('MainCtrl', {$scope:scope});
 
+      var empty = scope.files.length;
       scope.retrieveBucketFiles();
 
       var files = scope.files.length;
-
+      // this is causing errors because $scope.files gets updated but scope.files does not
+      // need to figure out how to test this
       expect(files).not.toBe(empty);
     }));
 

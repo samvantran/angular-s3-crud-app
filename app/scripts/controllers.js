@@ -21,7 +21,11 @@ app.controller('MainCtrl', ['$scope', function($scope) {
     s3 = new AWS.S3({ params:{ Bucket: $scope.creds.bucket }})
 
     // after logging in successfully, retrieve files associated with the user
-    if(s3) { $scope.retrieveBucketFiles(); }
+    if(s3) { 
+      $scope.retrieveBucketFiles(); 
+      $scope.isLoggedIn = true; 
+      $scope.orderProp = 'name';
+    }
   }
 
   //------------------------------------------------------
@@ -116,9 +120,10 @@ app.controller('MainCtrl', ['$scope', function($scope) {
   // MANAGING STATE
   // ------------------------------------------------------
 
-  $scope.isEditing   = false;
   $scope.fileName    = null;
   $scope.oldFileName = null;
+  $scope.isEditing   = false;
+  $scope.isLoggedIn  = false;
 
   $scope.showEditForm = function(currentFileName) {
     $scope.isEditing = true;

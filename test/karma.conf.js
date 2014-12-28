@@ -5,7 +5,7 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: 'app',
+    basePath: '../app/',
 
 
     // frameworks to use
@@ -19,7 +19,7 @@ module.exports = function(config) {
       'bower_components/angular-mocks/angular-mocks.js',
       'bower_components/aws-sdk-js/dist/aws-sdk.min.js',
       'scripts/*.js',
-      'test/**/*.js'
+      '../test/**/*.js'
     ],
 
 
