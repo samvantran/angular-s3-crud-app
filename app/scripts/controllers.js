@@ -19,9 +19,8 @@ app.controller('MainCtrl', ['$scope', function($scope) {
       secretAccessKey: $scope.creds.secretKey
     });
 
-    s3 = new AWS.S3({ params:{ Bucket: $scope.creds.bucket }})
-    
     // after logging in successfully, retrieve files associated with the user
+    s3 = new AWS.S3({ params:{ Bucket: $scope.creds.bucket }})   
     $scope.retrieveBucketFiles();
   }
 
@@ -30,6 +29,7 @@ app.controller('MainCtrl', ['$scope', function($scope) {
   //------------------------------------------------------
 
   $scope.uploadFileToS3 = function() {
+    $scope.uploadProgress = 0;
     var file = document.getElementById('fileUpload').files[0];
     
     s3.putObject({
@@ -41,22 +41,30 @@ app.controller('MainCtrl', ['$scope', function($scope) {
       if (err) { console.log(err); } // error ocurred
       else { 
         $scope.retrieveBucketFiles();
-        var form = document.getElementById('uploadFileForm')
-        form.reset();
+
+        // Reset the form & progress bar
+        document.getElementById('uploadFileForm').reset();
+        setTimeout(function() {
+          $scope.uploadProgress = 0;
+          $scope.$digest();
+        }, 2500);
       }
-    })
+    }) // this is what updates the progress bar live
+    .on('httpUploadProgress',function(progress) {
+      $scope.uploadProgress = Math.round(progress.loaded / progress.total * 100);
+      $scope.$digest();
+    });
   }
 
   $scope.retrieveBucketFiles = function() {
     s3.listObjects({ 
-      // required fields to access S3 bucket
-      Bucket: $scope.creds.bucket, 
+      Bucket: $scope.creds.bucket,    // required fields
       Prefix: $scope.creds.prefix
     }, function(err, data) {
       if (err) { console.log(err); }  // error occurred
       else {
-        
-        // signify logged in status if not logged in
+
+        // if file retrieval successful, signify logged in
         if( $scope.isLoggedIn === false ){
           $scope.isLoggedIn = true; 
           $scope.orderProp = '-LastModified';
@@ -65,17 +73,15 @@ app.controller('MainCtrl', ['$scope', function($scope) {
         // add S3 bucket files to $scope.files and update view
         $scope.files = data.Contents
         $scope.$apply();
-
       }
     })
   }
 
   $scope.editFileName = function() {
-    // To edit file name in S3: 
+    // AWS S3 doesn't allow file name changes so instead, we:
     // 1. GET old file & copy it
-    // 2. change name
-    // 3. DELETE old file
-    // 4. PUT new file
+    // 3. DELETE old file from S3
+    // 4. PUT the copied file with new name
 
     var fileCopy;
     $scope.newFileName = this.newFileName;
@@ -87,7 +93,7 @@ app.controller('MainCtrl', ['$scope', function($scope) {
     }, function(err, data) {
       if (err) console.log(err, err.stack);
       else {
-        // copy to memory & then DELETE old file from S3
+        // copy file to memory & then DELETE old file from S3
         fileCopy = data;
         s3.deleteObject({ 
           Bucket: $scope.creds.bucket, 

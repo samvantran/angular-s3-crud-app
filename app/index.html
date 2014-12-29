@@ -57,7 +57,12 @@
                 </div>
                 <div class="panel-body">
                   <form id="uploadFileForm" role="form" ng-submit="uploadFileToS3()">
-                    <input type="file" id="fileUpload"></input>      
+                    <input type="file" id="fileUpload"></input>
+                    <div class="progress">
+                      <div class="progress-bar" role="progressbar" aria-valuenow="{{ uploadProgress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ uploadProgress }}%;">
+                        {{ uploadProgress == 0 ? '' : uploadProgress + '%' }}
+                      </div>
+                    </div>      
                     <button class="btn btn-primary btn-block btn-lg" type="submit">Upload</button>
                   </form>
                 </div>
