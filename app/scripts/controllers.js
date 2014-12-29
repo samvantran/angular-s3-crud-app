@@ -1,8 +1,9 @@
 'use strict';
 
-var app = angular.module('Yellowhammer', []);
+var yhControllers = angular.module('yhControllers', []);
 
-app.controller('MainCtrl', ['$scope', '$http', function($scope, $http) {
+yhControllers.controller('MainCtrl', ['$scope', '$http', 
+  function($scope, $http) {
   
   $scope.files = [];    // S3 bucket files
   $scope.creds = {};    // S3 login credentials

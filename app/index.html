@@ -101,6 +101,7 @@
                     <th>File Name</th>
                     <th>Rename</th>
                     <th>Size</th>
+                    <th>> 15 MB ?</th>
                     <th>Date Modified</th>
                     <th>Download</th>
                     <th>Delete</th>
@@ -116,6 +117,7 @@
                     <p ng-hide="isEditing(file.Key)">{{ (file.Key).toString().slice(8, (file.Key).length)}}</p></th>
                     <th><button type="button" ng-click="showEditForm(file.Key)" class="btn btn-link"><span class="glyphicon glyphicon-pencil"></span></button></th>
                     <th>{{ (file.Size / 1000000).toFixed(3) }} MB</th>
+                    <th>{{ (file.Size / 1000000) > 15 | sizeCheck }}
                     <th>{{ (file.LastModified).toString().slice(0, 15)}}</th>
                     <th><a href="http://yh.interview.s3.amazonaws.com/{{file.Key}}"><button type="button" class="btn btn-link"><span class="glyphicon glyphicon-download-alt"></span></button></a></th>
                     <th><button type="button" ng-click="deleteFileFromS3(file)" class="close">&times;</button></th>
@@ -131,9 +133,11 @@
 
     <!-- javascripts -->
     <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/aws-sdk-js/dist/aws-sdk.min.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers.js"></script>
+    <script src="scripts/filters.js"></script>
 
     <!-- Not sure I'll need these yet
     <script src="scripts/services.js"></script>
