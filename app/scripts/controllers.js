@@ -20,13 +20,9 @@ app.controller('MainCtrl', ['$scope', function($scope) {
     });
 
     s3 = new AWS.S3({ params:{ Bucket: $scope.creds.bucket }})
-
+    
     // after logging in successfully, retrieve files associated with the user
-    if(s3) { 
-      $scope.retrieveBucketFiles(); 
-      $scope.isLoggedIn = true; 
-      $scope.orderProp = 'Key';
-    }
+    $scope.retrieveBucketFiles();
   }
 
   //------------------------------------------------------
@@ -59,9 +55,17 @@ app.controller('MainCtrl', ['$scope', function($scope) {
     }, function(err, data) {
       if (err) { console.log(err); }  // error occurred
       else {
+        
+        // signify logged in status if not logged in
+        if( $scope.isLoggedIn === false ){
+          $scope.isLoggedIn = true; 
+          $scope.orderProp = '-LastModified';
+        }
+
         // add S3 bucket files to $scope.files and update view
         $scope.files = data.Contents
         $scope.$apply();
+
       }
     })
   }

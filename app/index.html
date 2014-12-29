@@ -13,33 +13,33 @@
   <body ng-controller="MainCtrl">
     <div class="container-fluid">
       <div class="page-header no-top-marg">
-        <h1>Yellowhammer: Manage your Files with Angular & S3</h1>
+        <a href="/"><img src="assets/logo.png"></a><h1>Manage your Files with Angular & S3</h1>
       </div>
 
       <!-- Left Panel -->
       <div class="row">
-        <div class="col-md-4">
 
-          <!-- Login Section -->
+        <!-- Login Section -->
+        <div class="col-md-4">
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">Input Your AWS Credentials</h3>
             </div>
             <div class="panel-body">
-              <form role="form" ng-submit="loginToS3(creds.prefix, creds.accessKey, creds.secretKey, creds.bucket)">
-                <div class="input-group bottom-marg-10">
+              <form class="credentials" role="form" ng-submit="loginToS3(creds.prefix, creds.accessKey, creds.secretKey, creds.bucket)">
+                <div class="input-group">
                   <span class="input-group-addon">PREFIX</span>
                   <input ng-model="creds.prefix" type="text" class="form-control" placeholder="1234567890">
                 </div>
-                <div class="input-group bottom-marg-10">
+                <div class="input-group">
                   <span class="input-group-addon">ACCESS KEY</span>
                   <input ng-model="creds.accessKey" type="text" class="form-control" placeholder="1234567890">
                 </div>
-                <div class="input-group bottom-marg-10">
+                <div class="input-group">
                   <span class="input-group-addon">SECRET KEY</span>
                   <input ng-model="creds.secretKey" type="text" class="form-control" placeholder="123SECRETKEY">
                 </div>
-                <div class="input-group bottom-marg-10">
+                <div class="input-group">
                   <span class="input-group-addon">BUCKET</span>
                   <input ng-model="creds.bucket" type="text" class="form-control" placeholder="yh.interview">
                 </div>
@@ -57,7 +57,7 @@
                 </div>
                 <div class="panel-body">
                   <form id="uploadFileForm" role="form" ng-submit="uploadFileToS3()">
-                    <input class="bottom-marg-15" type="file" id="fileUpload"></input>      
+                    <input type="file" id="fileUpload"></input>      
                     <button class="btn btn-primary btn-block btn-lg" type="submit">Upload</button>
                   </form>
                 </div>
@@ -71,37 +71,53 @@
         <div class="col-md-8">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="">Your Files 
-                <form ng-show="isLoggedIn" class="form-inline pull-right">
-                  <div class="form-group">
-                    <input type="text" class="form-control" ng-model="query" placeholder="Search Files" aria-describedby="basic-addon1">
-                  </div>
-                </form>
+              <h3 class="panel-title">Your Files 
               </h3>
             </div>
             <div class="panel-body" ng-if="isLoggedIn" >
-              <div>
-                Sort by:
-                <select ng-model="orderProp">
-                  <option value="Key">Name</option>
-                  <option value="-LastModified">Most Recent</option>
-                  <option value="-Size">Largest File Size</option>
-                </select>
-              </div>
+              <form ng-show="isLoggedIn" class="form-inline">
+                <div class="form-group">
+                  <input type="text" class="form-control" ng-model="query" placeholder="Search Files">
+                </div>
 
-              <form role="form" ng-if="isEditing" ng-submit="editFileName(); stopEditing()">
-                <input type="text" name="text" ng-model="newFileName">
-                <button type="submit" class="btn btn-success" ><span class="glyphicon glyphicon-ok"></span></button>
-                <button ng-click="stopEditing()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+                <div class="form-group sorter">
+                  Sort by:
+                  <select class="form-control sorter" ng-model="orderProp">
+                    <option value="Key">Name</option>
+                    <option value="-LastModified">Most Recent</option>
+                    <option value="-Size">Largest File Size</option>
+                  </select>
+                </div>
               </form>
-              <ul ng-show="files">
-                <li ng-repeat="file in files | filter:query | orderBy:orderProp">
-                  <button type="button" ng-click="showEditForm(file.Key)" class="btn btn-link"><span class="glyphicon glyphicon-pencil"></span></button>
-                  <a href="http://yh.interview.s3.amazonaws.com/{{file.Key}}">{{ (file.Key).toString().slice(8, (file.Key).length)}}</a> | Size: {{ (file.Size / 1000000).toFixed(3) }} MB | Date Modified: {{ (file.LastModified).toString().slice(0, 15)}}
-                  <button type="button" ng-click="deleteFileFromS3(file)" class="pull-right close">&times;</button>
-                  <p>{{file}}</p>
-                </li>
-              </ul>
+
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>File Name</th>
+                    <th>Size</th>
+                    <th>Date Modified</th>
+                    <th>Edit</th>
+                    <th>Download</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="file in files | filter:query | orderBy:orderProp">
+                    <th scope="row">
+                      <form class="form-inline" role="form" ng-show="isEditing" ng-submit="editFileName(); stopEditing()">
+                      <input type="text" name="text" ng-model="newFileName">
+                      <!-- <button type="submit" class="btn btn-success" ><span class="glyphicon glyphicon-ok"></span></button> -->
+                      <button ng-click="stopEditing()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+                    </form>
+                    <p ng-hide="isEditing">{{ (file.Key).toString().slice(8, (file.Key).length)}}</p></th>
+                    <th>{{ (file.Size / 1000000).toFixed(3) }} MB</th>
+                    <th>{{ (file.LastModified).toString().slice(0, 15)}}</th>
+                    <th><button type="button" ng-click="showEditForm(file.Key)" class="btn btn-link"><span class="glyphicon glyphicon-pencil"></span></button></th>
+                    <th><a href="http://yh.interview.s3.amazonaws.com/{{file.Key}}"><button type="button" class="btn btn-link"><span class="glyphicon glyphicon-download-alt"></span></button></a></th>
+                    <th><button type="button" ng-click="deleteFileFromS3(file)" class="close">&times;</button></th>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

@@ -1,8 +1,37 @@
-.no-top-marg       { margin-top:    0;    }
-.bottom-marg-10    { margin-bottom: 10px; }
-.bottom-marg-15    { margin-bottom: 15px; }
-.top-marg-10       { margin-top:    10px; }
-.left-marg-10      { margin-left:   10px; }
-.input-group-addon { min-width:     120px;}
 
+/* STYLES */
+
+body { font-family: Helvetica, Arial, sans-serif; }
 ul li { list-style-type: none; }
+table tbody th {
+  font-weight: normal;
+}
+
+.page-header h1 {
+  display: inline-block;
+  position: relative;
+  top: 10px;
+}
+select.sorter {
+  transform: scale(0.9);
+}
+div.sorter {
+  float:right;
+}
+button.close {
+  float: none;
+}
+form.credentials div {
+  margin-bottom: 10px;
+}
+input#fileUpload {
+  margin-bottom: 10px;
+}
+th button.btn-danger {
+  transform: scale(0.8);
+}
+/*color {
+  background-color: #215374;
+}*/
+
+.no-top-marg { margin-top: 0; }
