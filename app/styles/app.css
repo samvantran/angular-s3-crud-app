@@ -1,22 +1,23 @@
 
 /* STYLES */
 
-body { font-family: Helvetica, Arial, sans-serif; }
-ul li { list-style-type: none; }
+body { 
+  font-family: Helvetica, Arial, sans-serif; 
+}
+ul li { 
+  list-style-type: none; 
+}
 table tbody th {
   font-weight: normal;
-}
-
-.page-header h1 {
-  display: inline-block;
-  position: relative;
-  top: 10px;
 }
 select.sorter {
   transform: scale(0.9);
 }
 div.sorter {
   float:right;
+}
+.panel-default>.panel-heading {
+  border-color: #F9E919;
 }
 button.close {
   float: none;
@@ -30,8 +31,16 @@ input#fileUpload {
 th a.btn-danger {
   transform: scale(0.8);
 }
-/*color {
+button.btn-primary {
   background-color: #215374;
-}*/
+}
+tr ~ tr, th ~ th { 
+  text-align: center;
+}
 
+.page-header h1 {
+  display: inline-block;
+  position: relative;
+  top: 10px;
+}
 .no-top-marg { margin-top: 0; }

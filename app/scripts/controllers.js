@@ -2,8 +2,8 @@
 
 var app = angular.module('Yellowhammer', []);
 
-app.controller('MainCtrl', ['$scope', function($scope) {
-
+app.controller('MainCtrl', ['$scope', '$http', function($scope, $http) {
+  
   $scope.files = [];    // S3 bucket files
   $scope.creds = {};    // S3 login credentials
   var s3;               // later used for S3 API interaction
@@ -27,6 +27,27 @@ app.controller('MainCtrl', ['$scope', function($scope) {
   //------------------------------------------------------
   // CRUD ACTIONS
   //------------------------------------------------------
+
+  $scope.retrieveBucketFiles = function() {
+    s3.listObjects({ 
+      Bucket: $scope.creds.bucket,    // required fields
+      Prefix: $scope.creds.prefix
+    }, function(err, data) {
+      if (err) { console.log(err); }  // error occurred
+      else {
+
+        // if file retrieval successful, signify logged in
+        if( $scope.isLoggedIn === false ){
+          $scope.isLoggedIn = true; 
+          $scope.orderProp = '-LastModified';
+        }
+
+        // add S3 bucket files to $scope.files and update view
+        $scope.files = data.Contents
+        $scope.$apply();
+      }
+    })
+  }
 
   $scope.uploadFileToS3 = function() {
     $scope.uploadProgress = 0;
@@ -56,32 +77,11 @@ app.controller('MainCtrl', ['$scope', function($scope) {
     });
   }
 
-  $scope.retrieveBucketFiles = function() {
-    s3.listObjects({ 
-      Bucket: $scope.creds.bucket,    // required fields
-      Prefix: $scope.creds.prefix
-    }, function(err, data) {
-      if (err) { console.log(err); }  // error occurred
-      else {
-
-        // if file retrieval successful, signify logged in
-        if( $scope.isLoggedIn === false ){
-          $scope.isLoggedIn = true; 
-          $scope.orderProp = '-LastModified';
-        }
-
-        // add S3 bucket files to $scope.files and update view
-        $scope.files = data.Contents
-        $scope.$apply();
-      }
-    })
-  }
-
   $scope.editFileName = function() {
     // AWS S3 doesn't allow file name changes so instead, we:
     // 1. GET old file & copy it
-    // 3. DELETE old file from S3
-    // 4. PUT the copied file with new name
+    // 2. PUT the copied file back to S3 with new name
+    // 3. DELETE old file
 
     var fileCopy;
     $scope.newFileName = this.newFileName;
@@ -91,26 +91,29 @@ app.controller('MainCtrl', ['$scope', function($scope) {
       Bucket: $scope.creds.bucket, 
       Key:    $scope.oldFileName 
     }, function(err, data) {
-      if (err) console.log(err, err.stack);
+      if (err) console.log(err, err.stack);   // error occurred
       else {
-        // copy file to memory & then DELETE old file from S3
+        // copy file and PUT it back to S3 with new name
         fileCopy = data;
-        s3.deleteObject({ 
-          Bucket: $scope.creds.bucket, 
-          Key:    $scope.oldFileName 
+        s3.putObject({ 
+          Key: $scope.creds.prefix + '/' + $scope.newFileName, 
+          ACL: "public-read", 
+          Body: fileCopy.Body 
         }, function(err, data){
           if (err) console.log(err);
-          else {
-            // ADD new file
-            s3.putObject({ 
-              Key: $scope.creds.prefix + '/' + $scope.newFileName, 
-              ACL: "public-read", 
-              Body: fileCopy.Body 
-            }, function(err, data){
-              if (err) console.log(err);
-              else {
-                $scope.retrieveBucketFiles();
-    }})}})}});
+          else { $scope.retrieveBucketFiles(); }  // update view
+        })
+      }
+    });
+
+    // Delete old file
+    s3.deleteObject({ 
+      Bucket: $scope.creds.bucket, 
+      Key:    $scope.oldFileName 
+    }, function(err, data){
+      if (err) console.log(err);
+    })
+
   } // end of editFileName()
 
   $scope.deleteFileFromS3 = function(file) {

@@ -37,7 +37,7 @@
                 </div>
                 <div class="input-group">
                   <span class="input-group-addon">SECRET KEY</span>
-                  <input ng-model="creds.secretKey" type="text" class="form-control" placeholder="SUPERSECRETKEY">
+                  <input ng-model="creds.secretKey" type="password" class="form-control" placeholder="SUPERSECRETKEY">
                 </div>
                 <div class="input-group">
                   <span class="input-group-addon">BUCKET</span>
@@ -111,7 +111,6 @@
                     <th scope="row">
                       <form class="form-inline" role="form" ng-show="isEditing(file.Key)" ng-submit="editFileName()">
                       <input type="text" name="text" ng-model="newFileName">
-                      <!-- <button type="submit" class="btn btn-success" ><span class="glyphicon glyphicon-ok"></span></button> -->
                       <a ng-click="stopEditing()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a>
                     </form>
                     <p ng-hide="isEditing(file.Key)">{{ (file.Key).toString().slice(8, (file.Key).length)}}</p></th>
