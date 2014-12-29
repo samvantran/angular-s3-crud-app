@@ -94,9 +94,9 @@
                 <thead>
                   <tr>
                     <th>File Name</th>
+                    <th>Rename</th>
                     <th>Size</th>
                     <th>Date Modified</th>
-                    <th>Edit</th>
                     <th>Download</th>
                     <th>Delete</th>
                   </tr>
@@ -104,15 +104,15 @@
                 <tbody>
                   <tr ng-repeat="file in files | filter:query | orderBy:orderProp">
                     <th scope="row">
-                      <form class="form-inline" role="form" ng-show="isEditing" ng-submit="editFileName(); stopEditing()">
+                      <form class="form-inline" role="form" ng-show="isEditing(file.Key)" ng-submit="editFileName()">
                       <input type="text" name="text" ng-model="newFileName">
                       <!-- <button type="submit" class="btn btn-success" ><span class="glyphicon glyphicon-ok"></span></button> -->
-                      <button ng-click="stopEditing()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+                      <a ng-click="stopEditing()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a>
                     </form>
-                    <p ng-hide="isEditing">{{ (file.Key).toString().slice(8, (file.Key).length)}}</p></th>
+                    <p ng-hide="isEditing(file.Key)">{{ (file.Key).toString().slice(8, (file.Key).length)}}</p></th>
+                    <th><button type="button" ng-click="showEditForm(file.Key)" class="btn btn-link"><span class="glyphicon glyphicon-pencil"></span></button></th>
                     <th>{{ (file.Size / 1000000).toFixed(3) }} MB</th>
                     <th>{{ (file.LastModified).toString().slice(0, 15)}}</th>
-                    <th><button type="button" ng-click="showEditForm(file.Key)" class="btn btn-link"><span class="glyphicon glyphicon-pencil"></span></button></th>
                     <th><a href="http://yh.interview.s3.amazonaws.com/{{file.Key}}"><button type="button" class="btn btn-link"><span class="glyphicon glyphicon-download-alt"></span></button></a></th>
                     <th><button type="button" ng-click="deleteFileFromS3(file)" class="close">&times;</button></th>
                   </tr>

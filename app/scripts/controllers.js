@@ -126,17 +126,19 @@ app.controller('MainCtrl', ['$scope', function($scope) {
 
   $scope.newFileName = null;
   $scope.oldFileName = null;
-  $scope.isEditing   = false;
   $scope.isLoggedIn  = false;
 
   $scope.showEditForm = function(currentFileName) {
-    $scope.isEditing = true;
     $scope.newFileName = currentFileName.slice(8, (currentFileName).length);
     $scope.oldFileName = currentFileName;
   }
 
+  $scope.isEditing = function(fileName) {
+    return fileName === $scope.oldFileName;
+  }
+
   $scope.stopEditing = function() {
-    $scope.isEditing = false;
+    $scope.oldFileName = null;
   }
 
 }]);

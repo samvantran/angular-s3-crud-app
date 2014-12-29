@@ -27,7 +27,7 @@ form.credentials div {
 input#fileUpload {
   margin-bottom: 10px;
 }
-th button.btn-danger {
+th a.btn-danger {
   transform: scale(0.8);
 }
 /*color {
