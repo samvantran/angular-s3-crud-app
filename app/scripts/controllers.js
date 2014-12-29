@@ -153,3 +153,8 @@ yhControllers.controller('MainCtrl', ['$scope', '$http',
 
 }]);
 
+
+yhControllers.controller('FileDetailCtrl', ['$scope', '$routeParams',
+  function($scope, $routeParams) {
+    $scope.fileKey = $routeParams.fileKey;
+  }]);

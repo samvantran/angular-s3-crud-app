@@ -8,6 +8,7 @@
     <!-- stylesheets -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles/app.css">
+    <link rel="stylesheet" href="styles/animations.css">
     
   </head>
   <body ng-controller="MainCtrl">
@@ -108,7 +109,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="file in files | filter:query | orderBy:orderProp">
+                  <tr ng-repeat="file in files | filter:query | orderBy:orderProp" class="file-listing">
                     <th scope="row">
                       <form class="form-inline" role="form" ng-show="isEditing(file.Key)" ng-submit="editFileName()">
                       <input type="text" name="text" ng-model="newFileName">
@@ -117,7 +118,7 @@
                     <p ng-hide="isEditing(file.Key)">{{ (file.Key).toString().slice(8, (file.Key).length)}}</p></th>
                     <th><button type="button" ng-click="showEditForm(file.Key)" class="btn btn-link"><span class="glyphicon glyphicon-pencil"></span></button></th>
                     <th>{{ (file.Size / 1000000).toFixed(3) }} MB</th>
-                    <th>{{ (file.Size / 1000000) > 15 | sizeCheck }}
+                    <th>{{ (file.Size / 1000000) > 15 | sizeCheck }}</th>
                     <th>{{ (file.LastModified).toString().slice(0, 15)}}</th>
                     <th><a href="http://yh.interview.s3.amazonaws.com/{{file.Key}}"><button type="button" class="btn btn-link"><span class="glyphicon glyphicon-download-alt"></span></button></a></th>
                     <th><button type="button" ng-click="deleteFileFromS3(file)" class="close">&times;</button></th>
@@ -128,19 +129,16 @@
           </div>
         </div>
       </div>
-  
     </div>
 
     <!-- javascripts -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/aws-sdk-js/dist/aws-sdk.min.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers.js"></script>
     <script src="scripts/filters.js"></script>
-
-    <!-- Not sure I'll need these yet
-    <script src="scripts/services.js"></script>
-    <script src="scripts/directives.js"></script> -->
   </body>
 </html>

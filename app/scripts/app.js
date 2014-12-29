@@ -7,7 +7,7 @@ yhApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/', {
-        templateUrl: 'app/index.html',
+        templateUrl: 'partials/s3-file-list.html',
         controller: 'MainCtrl'
       })
       .otherwise({
