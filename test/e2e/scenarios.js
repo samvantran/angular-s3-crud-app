@@ -4,31 +4,38 @@
 
 describe('Yellowhammer App', function() {
 
-  var LOGIN_CREDENTIALS = { 'ACCESSKEY': '',
-                            'SECRETKEY': '',
-                            'BUCKET': 'yh.interview'
-  }
+  describe('Login Process', function() {
 
-  it('can log in to S3', function() {
-      
-    browser.get('app/index.html');
+    var LOGIN_CREDENTIALS = { 'PREFIX' : '',
+                              'ACCESSKEY': '',
+                              'SECRETKEY': '',
+                              'BUCKET': 'yh.interview'
+    }
 
-    var fileList = element.all(by.repeater('file in files'));
-    expect(fileList.count()).toBe(0);
+    it('can log in to S3', function() {
+        
+      browser.get('app/index.html');
 
-    var accessKey = element(by.model('creds.accessKey'));
-    var secretKey = element(by.model('creds.secretKey'));
-    var bucket    = element(by.model('creds.bucket'));
-    var button = element(by.id('login-button'))
+      var fileList = element.all(by.repeater('file in files'));
+      var prefix = element(by.model('creds.prefix'));
+      var accessKey = element(by.model('creds.accessKey'));
+      var secretKey = element(by.model('creds.secretKey'));
+      var bucket    = element(by.model('creds.bucket'));
+      var button = element(by.id('login-button'))
 
-    accessKey.sendKeys(LOGIN_CREDENTIALS['ACCESSKEY']);
-    secretKey.sendKeys(LOGIN_CREDENTIALS['SECRETKEY']);
-    bucket.sendKeys(LOGIN_CREDENTIALS['BUCKET']);
-    button.click();
+      expect(fileList.count()).toBe(0);
 
-    browser.sleep(1500);
-    expect(fileList.count()).toBe(4);
-  });
+      prefix.sendKeys(LOGIN_CREDENTIALS['PREFIX']);
+      accessKey.sendKeys(LOGIN_CREDENTIALS['ACCESSKEY']);
+      secretKey.sendKeys(LOGIN_CREDENTIALS['SECRETKEY']);
+      bucket.sendKeys(LOGIN_CREDENTIALS['BUCKET']);
+      button.click();
+
+      browser.sleep(1000);
+      expect(fileList.count()).toBeGreaterThan(0);
+    });
+  })
+  
 
   describe('File list view', function() {
 
@@ -37,15 +44,43 @@ describe('Yellowhammer App', function() {
       var fileList = element.all(by.repeater('file in files'));
       var query = element(by.model('query'));
 
-      expect(fileList.count()).toBe(4);
-
       query.sendKeys('code');
       expect(fileList.count()).toBe(1);
 
       query.clear();
-      query.sendKeys('omg');
+      query.sendKeys('works');
       expect(fileList.count()).toBe(2);
     })
+
+    it('should be possible to control file order via the drop down select box', function() {
+
+      var fileNameColumn = element.all(by.repeater('file in files').column('file.Key'));
+      var query = element(by.model('query'));
+
+      function getNames() {
+        return fileNameColumn.map(function(elm) {
+          return elm.getText();
+        });
+      }
+
+      query.clear();
+      query.sendKeys('works'); //let's narrow the dataset to make the test assertions shorter
+
+      expect(getNames()).toEqual([
+        "holycowthisworks.jpg",
+        "omgthisworkstoo.jpg"
+      ]);
+
+      element(by.model('orderProp')).element(by.css('option[value="-Size"]')).click();
+
+      expect(getNames()).toEqual([
+        "omgthisworkstoo.jpg",
+        "holycowthisworks.jpg"
+      ]);
+    });
+  });
+
+  describe('CRUD actions', function() {
 
     xit('should upload file', function() {
       // having trouble with uploading files, SO solution uses jQuery - will look into that later
@@ -57,6 +92,6 @@ describe('Yellowhammer App', function() {
       element(by.id('uploader-button').sendKeys(absolutePath));
       element(by.id('upload-button').click());
     });
-  });
 
+  });
 }); // end of Yellowhammer describe
