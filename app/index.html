@@ -16,15 +16,21 @@
         <h1>Yellowhammer: Manage your Files with Angular & S3</h1>
       </div>
 
-      <!-- Login to AWS Section -->
+      <!-- Left Panel -->
       <div class="row">
         <div class="col-md-4">
+
+          <!-- Login Section -->
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">Input Your AWS Details</h3>
+              <h3 class="panel-title">Input Your AWS Credentials</h3>
             </div>
             <div class="panel-body">
-              <form role="form" ng-submit="loginToS3(creds.accessKey, creds.secretKey, creds.bucket)">
+              <form role="form" ng-submit="loginToS3(creds.prefix, creds.accessKey, creds.secretKey, creds.bucket)">
+                <div class="input-group bottom-marg-10">
+                  <span class="input-group-addon">PREFIX</span>
+                  <input ng-model="creds.prefix" type="text" class="form-control" placeholder="1234567890">
+                </div>
                 <div class="input-group bottom-marg-10">
                   <span class="input-group-addon">ACCESS KEY</span>
                   <input ng-model="creds.accessKey" type="text" class="form-control" placeholder="1234567890">
@@ -41,8 +47,26 @@
               </form>
             </div>
           </div>
-        </div> 
 
+          <!-- Upload Form -->
+          <div ng-show="isLoggedIn" class="row">
+            <div class="col-md-12">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Upload A File</h3>
+                </div>
+                <div class="panel-body">
+                  <form id="uploadFileForm" role="form" ng-submit="uploadFileToS3()">
+                    <input class="bottom-marg-15" type="file" id="fileUpload"></input>      
+                    <button class="btn btn-primary btn-block btn-lg" type="submit">Upload</button>
+                  </form>
+                </div>
+              </div>
+            </div>     
+          </div>
+        </div>
+
+        <!-- Right Panel -->
         <!-- File Listings Section -->
         <div class="col-md-8">
           <div class="panel panel-default">
@@ -55,49 +79,34 @@
                 </form>
               </h3>
             </div>
-            <div ng-if="isLoggedIn" class="panel-body">
+            <div class="panel-body" ng-if="isLoggedIn" >
               <div>
                 Sort by:
                 <select ng-model="orderProp">
-                  <option value="name">Name</option>
-                  <option value="age">Most Recent</option>
-                  <option value="size">File Size</option>
-                  <option value="type">File Type</option>
+                  <option value="Key">Name</option>
+                  <option value="-LastModified">Most Recent</option>
+                  <option value="-Size">Largest File Size</option>
                 </select>
               </div>
 
               <form role="form" ng-if="isEditing" ng-submit="editFileName(); stopEditing()">
-                <input type="text" name="text" ng-model="fileName">
+                <input type="text" name="text" ng-model="newFileName">
                 <button type="submit" class="btn btn-success" ><span class="glyphicon glyphicon-ok"></span></button>
                 <button ng-click="stopEditing()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
               </form>
               <ul ng-show="files">
                 <li ng-repeat="file in files | filter:query | orderBy:orderProp">
                   <button type="button" ng-click="showEditForm(file.Key)" class="btn btn-link"><span class="glyphicon glyphicon-pencil"></span></button>
-                  <a href="http://yh.interview.s3.amazonaws.com/{{file.Key}}">{{file.Key}}</a>
+                  <a href="http://yh.interview.s3.amazonaws.com/{{file.Key}}">{{ (file.Key).toString().slice(8, (file.Key).length)}}</a> | Size: {{ (file.Size / 1000000).toFixed(3) }} MB | Date Modified: {{ (file.LastModified).toString().slice(0, 15)}}
                   <button type="button" ng-click="deleteFileFromS3(file)" class="pull-right close">&times;</button>
+                  <p>{{file}}</p>
                 </li>
               </ul>
             </div>
           </div>
         </div>
       </div>
-    
-    <!-- Upload Form -->
-      <div class="row">
-        <div class="col-md-4">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Upload A File</h3>
-            </div>
-            <div class="panel-body">
-              <form id="uploadFileForm" role="form" ng-submit="uploadFileToS3()">
-              <input id='uploader-button' class="bottom-marg-15" type="file" id="fileUpload"></input>      
-              <button id='upload-button' class="btn btn-primary btn-block btn-lg" type="submit">Upload</button>
-            </div>
-          </div>
-        </div>     
-      </div>
+  
     </div>
 
     <!-- javascripts -->

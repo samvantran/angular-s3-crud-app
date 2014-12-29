@@ -8,11 +8,12 @@ app.controller('MainCtrl', ['$scope', function($scope) {
   $scope.creds = {};    // S3 login credentials
   var s3;               // later used for S3 API interaction
 
-  $scope.loginToS3 = function(accessKey, secretKey, bucket) {
+  $scope.loginToS3 = function(prefix, accessKey, secretKey, bucket) {
+    $scope.creds.prefix    = prefix;
     $scope.creds.accessKey = accessKey;
     $scope.creds.secretKey = secretKey;
     $scope.creds.bucket    = bucket;
-
+    
     AWS.config.update({
       accessKeyId:     $scope.creds.accessKey,
       secretAccessKey: $scope.creds.secretKey
@@ -24,7 +25,7 @@ app.controller('MainCtrl', ['$scope', function($scope) {
     if(s3) { 
       $scope.retrieveBucketFiles(); 
       $scope.isLoggedIn = true; 
-      $scope.orderProp = 'name';
+      $scope.orderProp = 'Key';
     }
   }
 
@@ -34,11 +35,10 @@ app.controller('MainCtrl', ['$scope', function($scope) {
 
   $scope.uploadFileToS3 = function() {
     var file = document.getElementById('fileUpload').files[0];
-    var fileKey = 'samtran/' + file.name;
     
     s3.putObject({
       // required fields to access S3 bucket
-      Key:  fileKey,
+      Key:  $scope.creds.prefix + '/' + file.name,  // ex. johndoe/file.jpg
       Body: file,
       ACL:  "public-read"
     }, function(err, data) {
@@ -55,7 +55,7 @@ app.controller('MainCtrl', ['$scope', function($scope) {
     s3.listObjects({ 
       // required fields to access S3 bucket
       Bucket: $scope.creds.bucket, 
-      Prefix: "samtran" 
+      Prefix: $scope.creds.prefix
     }, function(err, data) {
       if (err) { console.log(err); }  // error occurred
       else {
@@ -74,12 +74,12 @@ app.controller('MainCtrl', ['$scope', function($scope) {
     // 4. PUT new file
 
     var fileCopy;
-    $scope.fileName = this.fileName;
+    $scope.newFileName = this.newFileName;
     
     // GET old file
     s3.getObject({ 
       Bucket: $scope.creds.bucket, 
-      Key: $scope.oldFileName 
+      Key:    $scope.oldFileName 
     }, function(err, data) {
       if (err) console.log(err, err.stack);
       else {
@@ -87,13 +87,13 @@ app.controller('MainCtrl', ['$scope', function($scope) {
         fileCopy = data;
         s3.deleteObject({ 
           Bucket: $scope.creds.bucket, 
-          Key: $scope.oldFileName 
+          Key:    $scope.oldFileName 
         }, function(err, data){
           if (err) console.log(err);
           else {
             // ADD new file
             s3.putObject({ 
-              Key: $scope.fileName, 
+              Key: $scope.creds.prefix + '/' + $scope.newFileName, 
               ACL: "public-read", 
               Body: fileCopy.Body 
             }, function(err, data){
@@ -114,20 +114,20 @@ app.controller('MainCtrl', ['$scope', function($scope) {
         else     { $scope.retrieveBucketFiles(); }
       });
     } 
-  } // end of deleteFileFromS3
+  }
 
   // ------------------------------------------------------
   // MANAGING STATE
   // ------------------------------------------------------
 
-  $scope.fileName    = null;
+  $scope.newFileName = null;
   $scope.oldFileName = null;
   $scope.isEditing   = false;
   $scope.isLoggedIn  = false;
 
   $scope.showEditForm = function(currentFileName) {
     $scope.isEditing = true;
-    $scope.fileName = currentFileName;
+    $scope.newFileName = currentFileName.slice(8, (currentFileName).length);
     $scope.oldFileName = currentFileName;
   }
 
