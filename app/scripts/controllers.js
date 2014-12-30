@@ -1,9 +1,9 @@
 'use strict';
 
-var yhControllers = angular.module('yhControllers', []);
+var yhControllers = angular.module('yhControllers', ['yhServices']);
 
-yhControllers.controller('MainCtrl', ['$scope', '$http', 
-  function($scope, $http) {
+yhControllers.controller('MainCtrl', ['$scope', '$http', 'dragAndDrop', 
+  function($scope, $http, dragAndDrop) {
   
   $scope.files = [];    // S3 bucket files
   $scope.creds = {};    // S3 login credentials
@@ -44,7 +44,8 @@ yhControllers.controller('MainCtrl', ['$scope', '$http',
         }
 
         // add S3 bucket files to $scope.files and update view
-        $scope.files = data.Contents
+        $scope.files = data.Contents;
+        dragAndDrop.activate();
         $scope.$apply();
       }
     })

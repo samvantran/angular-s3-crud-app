@@ -2,6 +2,7 @@ var yhApp = angular.module('Yellowhammer', [
   'ngRoute',
   'yhAnimations',
   'yhControllers',
+  'yhServices',
   'yhFilters']);
 
 yhApp.config(['$routeProvider',

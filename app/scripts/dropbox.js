@@ -1,6 +1,7 @@
 
 
 // This is for dragging and dropping files in the Upload Files section
+function dragndrop() {
   var dropbox, inputbox;
 
   dropbox = document.getElementById("dropbox");
@@ -36,3 +37,4 @@
     input.files[0] = files[0];
     dropbox.innerHTML = '<h2>' + files[0].name + '</h2>';
   }
+}  
