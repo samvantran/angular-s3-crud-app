@@ -59,12 +59,16 @@
                 <div class="panel-body">
                   <form id="uploadFileForm" role="form" ng-submit="uploadFileToS3()">
                     <input type="file" id="fileUpload"></input>
+                    
+                    <div type="file" class="col-md-12" id="dropbox"><h2>Drag and Drop Files</h2>
+                    </div>
+
                     <div class="progress">
                       <div class="progress-bar" role="progressbar" aria-valuenow="{{ uploadProgress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ uploadProgress }}%;">
                         {{ uploadProgress == 0 ? '' : uploadProgress + '%' }}
                       </div>
                     </div>      
-                    <button class="btn btn-primary btn-block btn-md" type="submit">Upload</button>
+                    <button id="uploadButton" class="btn btn-primary btn-block btn-md" type="submit">Upload</button>
                   </form>
                 </div>
               </div>
@@ -141,5 +145,6 @@
     <script src="scripts/controllers.js"></script>
     <script src="scripts/filters.js"></script>
     <script src="scripts/animations.js"></script>
+    <script src="scripts/dropbox.js"></script>
   </body>
 </html>

@@ -16,12 +16,11 @@ select.sorter {
 div.sorter {
   float:right;
 }
-.panel-default>.panel-heading {
-  color: #F9E919;
-  background-color: #215374;
-}
 button.close {
   float: none;
+}
+button.btn-primary {
+  background-color: #215374;
 }
 form.credentials div {
   margin-bottom: 10px;
@@ -32,16 +31,27 @@ input#fileUpload {
 th a.btn-danger {
   transform: scale(0.8);
 }
-button.btn-primary {
-  background-color: #215374;
-}
 tr ~ tr, th ~ th { 
   text-align: center;
 }
-
+#dropbox {
+  border: 5px dashed;
+  height: 85px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 1.5em;
+  opacity: 0.5;
+}
 .page-header h1 {
   display: inline-block;
   position: relative;
   top: 10px;
 }
-.no-top-marg { margin-top: 0; }
+.panel-default>.panel-heading {
+  color: #F9E919;
+  background-color: #215374;
+}
+.no-top-marg { 
+  margin-top: 0; 
+}
+

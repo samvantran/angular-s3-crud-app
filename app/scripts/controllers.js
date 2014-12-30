@@ -64,8 +64,9 @@ yhControllers.controller('MainCtrl', ['$scope', '$http',
       else { 
         $scope.retrieveBucketFiles();
 
-        // Reset the form & progress bar
+        // Reset the forms & progress bar
         document.getElementById('uploadFileForm').reset();
+        document.getElementById('dropbox').innerHTML = '<h2>Drag and Drop Files</h2>'
         setTimeout(function() {
           $scope.uploadProgress = 0;
           $scope.$digest();
