@@ -3,13 +3,14 @@ var yhApp = angular.module('Yellowhammer', [
   'yhAnimations',
   'yhControllers',
   'yhServices',
+  'yhDirectives',
   'yhFilters']);
 
 yhApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/', {
-        templateUrl: 'partials/s3-file-list.html',
+        templateUrl: 'partials/file-list.html',
         controller: 'MainCtrl'
       })
       .otherwise({

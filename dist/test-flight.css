@@ -1,0 +1,95 @@
+
+/* STYLES */
+
+body { 
+  font-family: Helvetica, Arial, sans-serif; 
+}
+ul li { 
+  list-style-type: none; 
+}
+table tbody th {
+  font-weight: normal;
+}
+select.sorter {
+  transform: scale(0.9);
+}
+div.sorter {
+  float:right;
+}
+div.progress {
+  padding: 0;
+}
+button.close {
+  float: none;
+}
+button.btn-primary {
+  background-color: #215374;
+}
+form.credentials div {
+  margin-bottom: 10px;
+}
+input#fileUpload {
+  margin-bottom: 10px;
+}
+th a.btn-danger {
+  transform: scale(0.8);
+}
+tr ~ tr, th ~ th { 
+  text-align: center;
+}
+#dropbox {
+  border: 5px dashed;
+  height: 85px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 1.5em;
+  opacity: 0.5;
+}
+.page-header h1 {
+  display: inline-block;
+  position: relative;
+  top: 10px;
+}
+.panel-default>.panel-heading {
+  color: #F9E919;
+  background-color: #215374;
+}
+.no-top-marg { 
+  margin-top: 0; 
+}
+.no-padding {
+  padding: 0;
+}
+.file-listing.ng-enter,
+.file-listing.ng-leave,
+.file-listing.ng-move {
+  -webkit-transition: 0.3s linear all;
+     -moz-transition: 0.3s linear all;
+       -o-transition: 0.3s linear all;
+          transition: 0.3s linear all;
+}
+
+.file-listing.ng-enter,
+.file-listing.ng-move {
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.file-listing.ng-enter.ng-move-active,
+.file-listing.ng-move.ng-move-active {
+  opacity: 1;
+  height: 120px;
+}
+
+.file-listing.ng-leave {
+  opacity: 1;
+  overflow: hidden;
+}
+
+.file-listing.ng-leave.ng-leave-active {
+  opacity: 0;
+  height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
