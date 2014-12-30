@@ -1,5 +1,6 @@
 var yhApp = angular.module('Yellowhammer', [
   'ngRoute',
+  'yhAnimations',
   'yhControllers',
   'yhFilters']);
 

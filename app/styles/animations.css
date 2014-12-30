@@ -1,3 +1,4 @@
+.file-listing.ng-enter,
 .file-listing.ng-leave,
 .file-listing.ng-move {
   -webkit-transition: 0.3s linear all;
