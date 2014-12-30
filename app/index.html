@@ -17,16 +17,15 @@
         <a href="/"><img src="images/logo.png"></a>
       </div>
 
+      <!-- left panel -->
       <div class="col-md-4">
-        <!-- Login Form -->
-        <div class="col-md-12 no-padding" ng-include="'partials/login-panel.html'"></div>
+        <login-section></login-section>
 
-        <!-- Upload Form -->
-        <div class="col-md-12 no-padding" ng-show="isLoggedIn" ng-include="'partials/upload-form.html'"></div>
+        <upload-form></upload-form>
       </div> 
         
-      <!-- File Listings Section -->
-      <div class="col-md-8" ng-include="'partials/file-listing.html'"></div>
+      <!-- right panel -->
+      <file-listing></file-listing>
     </div>
 
     <!-- javascripts -->
@@ -38,6 +37,7 @@
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers.js"></script>
     <script src="scripts/services.js"></script>
+    <script src="scripts/directives.js"></script>
     <script src="scripts/filters.js"></script>
     <script src="scripts/animations.js"></script>
     <script src="scripts/dropbox.js"></script>

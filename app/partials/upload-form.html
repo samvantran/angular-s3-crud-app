@@ -1,20 +1,22 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Upload A File</h3>
-  </div>
-  <div class="panel-body">
-    <form id="uploadFileForm" role="form" ng-submit="uploadFileToS3()">
-      <input type="file" id="fileUpload"></input>
-      
-      <div type="file" class="col-md-12" id="dropbox"><h2>Drag and Drop Files</h2>
-      </div>
-
-      <div class="col-md-12 progress">
-        <div class="progress-bar" role="progressbar" aria-valuenow="{{ uploadProgress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ uploadProgress }}%;">
-          {{ uploadProgress == 0 ? '' : uploadProgress + '%' }}
+<div class="col-md-12 no-padding" ng-show="isLoggedIn">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Upload A File</h3>
+    </div>
+    <div class="panel-body">
+      <form id="uploadFileForm" role="form" ng-submit="uploadFileToS3()">
+        <input type="file" id="fileUpload"></input>
+        
+        <div type="file" class="col-md-12" id="dropbox"><h2>Drag and Drop Files</h2>
         </div>
-      </div>      
-      <button id="uploadButton" class="btn btn-primary btn-block btn-md" type="submit">UPLOAD</button>
-    </form>
+
+        <div class="col-md-12 progress">
+          <div class="progress-bar" role="progressbar" aria-valuenow="{{ uploadProgress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ uploadProgress }}%;">
+            {{ uploadProgress == 0 ? '' : uploadProgress + '%' }}
+          </div>
+        </div>      
+        <button id="uploadButton" class="btn btn-primary btn-block btn-md" type="submit">UPLOAD</button>
+      </form>
+    </div>
   </div>
 </div>

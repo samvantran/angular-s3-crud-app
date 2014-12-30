@@ -1,52 +1,54 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Manage Your Files with Angular & S3
-    </h3>
-  </div>
-  <div class="panel-body" ng-if="isLoggedIn" >
-    <form ng-show="isLoggedIn" class="form-inline">
-      <div class="form-group">
-        <input type="text" class="form-control" ng-model="query" placeholder="Search Files">
-      </div>
+<div class="col-md-8">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Manage Your Files with Angular & S3
+      </h3>
+    </div>
+    <div class="panel-body" ng-if="isLoggedIn" >
+      <form ng-show="isLoggedIn" class="form-inline">
+        <div class="form-group">
+          <input type="text" class="form-control" ng-model="query" placeholder="Search Files">
+        </div>
 
-      <div class="form-group sorter">
-        Sort by:
-        <select class="form-control sorter" ng-model="orderProp">
-          <option value="Key">Name</option>
-          <option value="-LastModified">Most Recent</option>
-          <option value="-Size">Largest File Size</option>
-        </select>
-      </div>
-    </form>
+        <div class="form-group sorter">
+          Sort by:
+          <select class="form-control sorter" ng-model="orderProp">
+            <option value="Key">Name</option>
+            <option value="-LastModified">Most Recent</option>
+            <option value="-Size">Largest File Size</option>
+          </select>
+        </div>
+      </form>
 
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>File Name</th>
-          <th>Rename <span class="glyphicon glyphicon-question-sign" title="Due to the nature of AWS S3, renaming a file may take longer than expected. Please be patient."></span></th>
-          <th>Size</th>
-          <th>> 15 MB ?</th>
-          <th>Date Modified</th>
-          <th>Download</th>
-          <th>Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="file in files | filter:query | orderBy:orderProp" class="file-listing">
-          <th scope="row">
-            <form class="form-inline" role="form" ng-show="isEditing(file.Key)" ng-submit="editFileName()">
-            <input type="text" name="text" ng-model="newFileName">
-            <a ng-click="stopEditing()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a>
-          </form>
-          <p ng-hide="isEditing(file.Key)">{{ (file.Key).toString().slice(8, (file.Key).length)}}</p></th>
-          <th><button type="button" ng-click="showEditForm(file.Key)" class="btn btn-link"><span class="glyphicon glyphicon-pencil"></span></button></th>
-          <th>{{ (file.Size / 1000000).toFixed(3) }} MB</th>
-          <th>{{ (file.Size / 1000000) > 15 | sizeCheck }}</th>
-          <th>{{ (file.LastModified).toString().slice(0, 15)}}</th>
-          <th><a href="http://yh.interview.s3.amazonaws.com/{{file.Key}}"><button type="button" class="btn btn-link"><span class="glyphicon glyphicon-download-alt"></span></button></a></th>
-          <th><button type="button" ng-click="deleteFileFromS3(file)" class="close">&times;</button></th>
-        </tr>
-      </tbody>
-    </table>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>File Name</th>
+            <th>Rename <span class="glyphicon glyphicon-question-sign" title="Due to the nature of AWS S3, renaming a file may take longer than expected. Please be patient."></span></th>
+            <th>Size</th>
+            <th>> 15 MB ?</th>
+            <th>Date Modified</th>
+            <th>Download</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="file in files | filter:query | orderBy:orderProp" class="file-listing">
+            <th scope="row">
+              <form class="form-inline" role="form" ng-show="isEditing(file.Key)" ng-submit="editFileName()">
+              <input type="text" name="text" ng-model="newFileName">
+              <a ng-click="stopEditing()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a>
+            </form>
+            <p ng-hide="isEditing(file.Key)">{{ (file.Key).toString().slice(8, (file.Key).length)}}</p></th>
+            <th><button type="button" ng-click="showEditForm(file.Key)" class="btn btn-link"><span class="glyphicon glyphicon-pencil"></span></button></th>
+            <th>{{ (file.Size / 1000000).toFixed(3) }} MB</th>
+            <th>{{ (file.Size / 1000000) > 15 | sizeCheck }}</th>
+            <th>{{ (file.LastModified).toString().slice(0, 15)}}</th>
+            <th><a href="http://yh.interview.s3.amazonaws.com/{{file.Key}}"><button type="button" class="btn btn-link"><span class="glyphicon glyphicon-download-alt"></span></button></a></th>
+            <th><button type="button" ng-click="deleteFileFromS3(file)" class="close">&times;</button></th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

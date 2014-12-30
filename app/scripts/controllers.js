@@ -1,6 +1,6 @@
 'use strict';
 
-var yhControllers = angular.module('yhControllers', ['yhServices']);
+var yhControllers = angular.module('yhControllers', ['yhServices', 'yhDirectives']);
 
 yhControllers.controller('MainCtrl', ['$scope', '$http', 'dragAndDrop', 
   function($scope, $http, dragAndDrop) {
