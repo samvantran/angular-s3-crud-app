@@ -14,7 +14,7 @@ yhControllers.controller('MainCtrl', ['$scope', '$http',
     $scope.creds.accessKey = accessKey;
     $scope.creds.secretKey = secretKey;
     $scope.creds.bucket    = bucket;
-    
+
     AWS.config.update({
       accessKeyId:     $scope.creds.accessKey,
       secretAccessKey: $scope.creds.secretKey
