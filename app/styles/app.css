@@ -16,6 +16,9 @@ select.sorter {
 div.sorter {
   float:right;
 }
+div.progress {
+  padding: 0;
+}
 button.close {
   float: none;
 }
