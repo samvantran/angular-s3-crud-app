@@ -17,122 +17,16 @@
         <a href="/"><img src="images/logo.png"></a>
       </div>
 
-      <!-- Left Panel -->
-      <div class="row">
+      <div class="col-md-4">
+        <!-- Login Form -->
+        <div class="col-md-12 no-padding" ng-include="'partials/login-panel.html'"></div>
 
-        <!-- Login Section -->
-        <div class="col-md-4">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Input Your AWS Credentials</h3>
-            </div>
-            <div class="panel-body">
-              <form class="credentials" role="form" ng-submit="loginToS3(creds.prefix, creds.accessKey, creds.secretKey, creds.bucket)">
-                <div class="input-group">
-                  <span class="input-group-addon">PREFIX</span>
-                  <input ng-model="creds.prefix" type="text" class="form-control" placeholder="maryjanewatson">
-                </div>
-                <div class="input-group">
-                  <span class="input-group-addon">ACCESS KEY</span>
-                  <input ng-model="creds.accessKey" type="text" class="form-control" placeholder="1234567890">
-                </div>
-                <div class="input-group">
-                  <span class="input-group-addon">SECRET KEY</span>
-                  <input ng-model="creds.secretKey" type="password" class="form-control" placeholder="SUPERSECRETKEY">
-                </div>
-                <div class="input-group">
-                  <span class="input-group-addon">BUCKET</span>
-                  <input ng-model="creds.bucket" type="text" class="form-control" placeholder="yh.interview">
-                </div>
-                <button id="login-button"type="submit" class="btn btn-primary btn-block btn-md">LOGIN</button>
-              </form>
-            </div>
-          </div>
-
-          <!-- Upload Form -->
-          <div ng-show="isLoggedIn" class="row">
-            <div class="col-md-12">
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h3 class="panel-title">Upload A File</h3>
-                </div>
-                <div class="panel-body">
-                  <form id="uploadFileForm" role="form" ng-submit="uploadFileToS3()">
-                    <input type="file" id="fileUpload"></input>
-                    
-                    <div type="file" class="col-md-12" id="dropbox"><h2>Drag and Drop Files</h2>
-                    </div>
-
-                    <div class="col-md-12 progress">
-                      <div class="progress-bar" role="progressbar" aria-valuenow="{{ uploadProgress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ uploadProgress }}%;">
-                        {{ uploadProgress == 0 ? '' : uploadProgress + '%' }}
-                      </div>
-                    </div>      
-                    <button id="uploadButton" class="btn btn-primary btn-block btn-md" type="submit">UPLOAD</button>
-                  </form>
-                </div>
-              </div>
-            </div>     
-          </div>
-        </div>
-
-        <!-- Right Panel -->
-        <!-- File Listings Section -->
-        <div class="col-md-8">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Manage Your Files with Angular & S3
-              </h3>
-            </div>
-            <div class="panel-body" ng-if="isLoggedIn" >
-              <form ng-show="isLoggedIn" class="form-inline">
-                <div class="form-group">
-                  <input type="text" class="form-control" ng-model="query" placeholder="Search Files">
-                </div>
-
-                <div class="form-group sorter">
-                  Sort by:
-                  <select class="form-control sorter" ng-model="orderProp">
-                    <option value="Key">Name</option>
-                    <option value="-LastModified">Most Recent</option>
-                    <option value="-Size">Largest File Size</option>
-                  </select>
-                </div>
-              </form>
-
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>File Name</th>
-                    <th>Rename <span class="glyphicon glyphicon-question-sign" title="Due to the nature of AWS S3, renaming a file may take longer than expected. Please be patient."></span></th>
-                    <th>Size</th>
-                    <th>> 15 MB ?</th>
-                    <th>Date Modified</th>
-                    <th>Download</th>
-                    <th>Delete</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="file in files | filter:query | orderBy:orderProp" class="file-listing">
-                    <th scope="row">
-                      <form class="form-inline" role="form" ng-show="isEditing(file.Key)" ng-submit="editFileName()">
-                      <input type="text" name="text" ng-model="newFileName">
-                      <a ng-click="stopEditing()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a>
-                    </form>
-                    <p ng-hide="isEditing(file.Key)">{{ (file.Key).toString().slice(8, (file.Key).length)}}</p></th>
-                    <th><button type="button" ng-click="showEditForm(file.Key)" class="btn btn-link"><span class="glyphicon glyphicon-pencil"></span></button></th>
-                    <th>{{ (file.Size / 1000000).toFixed(3) }} MB</th>
-                    <th>{{ (file.Size / 1000000) > 15 | sizeCheck }}</th>
-                    <th>{{ (file.LastModified).toString().slice(0, 15)}}</th>
-                    <th><a href="http://yh.interview.s3.amazonaws.com/{{file.Key}}"><button type="button" class="btn btn-link"><span class="glyphicon glyphicon-download-alt"></span></button></a></th>
-                    <th><button type="button" ng-click="deleteFileFromS3(file)" class="close">&times;</button></th>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
+        <!-- Upload Form -->
+        <div class="col-md-12 no-padding" ng-show="isLoggedIn" ng-include="'partials/upload-form.html'"></div>
+      </div> 
+        
+      <!-- File Listings Section -->
+      <div class="col-md-8" ng-include="'partials/file-listing.html'"></div>
     </div>
 
     <!-- javascripts -->

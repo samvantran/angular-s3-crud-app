@@ -1,0 +1,27 @@
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Input Your AWS Credentials</h3>
+    </div>
+    <div class="panel-body">
+      <form class="credentials" role="form" ng-submit="loginToS3(creds.prefix, creds.accessKey, creds.secretKey, creds.bucket)">
+        <div class="input-group">
+          <span class="input-group-addon">PREFIX</span>
+          <input ng-model="creds.prefix" type="text" class="form-control" placeholder="maryjanewatson">
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon">ACCESS KEY</span>
+          <input ng-model="creds.accessKey" type="text" class="form-control" placeholder="1234567890">
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon">SECRET KEY</span>
+          <input ng-model="creds.secretKey" type="password" class="form-control" placeholder="SUPERSECRETKEY">
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon">BUCKET</span>
+          <input ng-model="creds.bucket" type="text" class="form-control" placeholder="yh.interview">
+        </div>
+        <button id="login-button"type="submit" class="btn btn-primary btn-block btn-md">LOGIN</button>
+      </form>
+    </div>
+  </div>
