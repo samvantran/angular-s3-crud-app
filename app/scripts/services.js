@@ -85,3 +85,18 @@ yhServices.service('s3Service', ['$rootScope', function($rootScope) {
     }
   }
 }]);
+
+yhServices.service('uploadForm', function() {
+  return {
+    reset: function(scope) {
+      var dropbox = document.getElementById('dropbox');
+      dropbox.innerHTML = '<h2>Drag and Drop Files</h2>';
+      dropbox.style.border = '5px dashed black';
+      document.getElementById('uploadFileForm').reset();
+      setTimeout(function() {
+        scope.uploadProgress = 0;
+        scope.$digest();
+      }, 2500);
+    }
+  };
+});

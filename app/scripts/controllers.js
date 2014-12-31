@@ -11,8 +11,8 @@ yhControllers.controller('LoginCtrl', ['$scope', 'user', 's3Service',
     };
 }]);
 
-yhControllers.controller('S3Ctrl', ['$scope', 'user', 's3Service', 'dragAndDrop', 
-  function($scope, user, s3Service, dragAndDrop){
+yhControllers.controller('S3Ctrl', ['$scope', 'user', 's3Service', 'dragAndDrop', 'uploadForm',
+  function($scope, user, s3Service, dragAndDrop, uploadForm){
 
     $scope.$on('user::loggedIn', function() {    
       $scope.isLoggedIn = user.getLoginStatus();
@@ -62,15 +62,8 @@ yhControllers.controller('S3Ctrl', ['$scope', 'user', 's3Service', 'dragAndDrop'
       }, function(err, data) {
         if (err) { console.log(err); } // error ocurred
         else { 
+          uploadForm.reset($scope);
           $scope.retrieveBucketFiles();
-
-          // Reset the forms & progress bar
-          document.getElementById('uploadFileForm').reset();
-          document.getElementById('dropbox').innerHTML = '<h2>Drag and Drop Files</h2>'
-          setTimeout(function() {
-            $scope.uploadProgress = 0;
-            $scope.$digest();
-          }, 2500);
         }
       }) // this is what updates the progress bar live
       .on('httpUploadProgress',function(progress) {

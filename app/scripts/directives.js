@@ -11,6 +11,7 @@ yhDirectives.directive('loginSection', function() {
 
 yhDirectives.directive('uploadForm', function() {
   return {
+
     restrict: 'E', 
     templateUrl: 'partials/upload-form.html'
   };
