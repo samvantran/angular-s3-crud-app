@@ -40,4 +40,48 @@ yhServices.service('dragAndDrop', function() {
       }
     }
   }
-})
+});
+
+yhServices.service('user', ['$rootScope', function($rootScope) {
+  this.login = { status: false };
+  var self = this;
+
+  return {
+    getLoginStatus: function() {
+      return self.login.status;
+    },
+    setLoginToTrue: function() {
+      self.login.status = true;
+      $rootScope.$broadcast('user::loggedIn');
+    }
+  };
+}]);
+
+yhServices.service('s3Service', ['$rootScope', function($rootScope) {
+  this.creds = {  
+    prefix:     null,
+    accessKey:  null,
+    secretKey:  null,
+    bucket:     null
+  };
+  var self = this;
+
+  return {
+    getCreds: function() {
+      return self.creds;
+    },
+    setCreds: function(prefix, accessKey, secretKey, bucket) {
+      self.creds.prefix    = prefix;
+      self.creds.accessKey = accessKey;
+      self.creds.secretKey = secretKey;
+      self.creds.bucket    = bucket;
+
+      AWS.config.update({
+        accessKeyId:     accessKey,
+        secretAccessKey: secretKey
+      });
+
+      $rootScope.$broadcast('s3creds::changed');
+    }
+  }
+}]);
