@@ -10,14 +10,14 @@
     <link rel="stylesheet" href="../dist/test-flight.css">
     
   </head>
-  <body ng-controller="MainCtrl">
+  <body ng-controller="S3Ctrl">
     <div class="container-fluid">
       <div class="page-header no-top-marg">
         <a href="/app"><img src="images/logo.png"></a>
       </div>
 
       <!-- left panel -->
-      <div class="col-md-4">
+      <div ng-controller="LoginCtrl" class="col-md-4">
         <login-section></login-section>
 
         <upload-form></upload-form>

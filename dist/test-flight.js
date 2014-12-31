@@ -338,13 +338,28 @@ yhApp.config(['$routeProvider',
 
 var yhControllers = angular.module('yhControllers', ['yhServices', 'yhDirectives']);
 
-yhControllers.controller('MainCtrl', ['$scope', 'user', 'dragAndDrop', 's3Service', 
-  function($scope, user, dragAndDrop, s3Service) {
+yhControllers.controller('LoginCtrl', ['$scope', 'user', 's3Service', 
+  function($scope, user, s3Service) {
     var s3;   // later used for S3 API interaction
 
     $scope.loginToS3 = function(prefix, accessKey, secretKey, bucket) {
       s3Service.setCreds(prefix, accessKey, secretKey, bucket);
     };
+}]);
+
+yhControllers.controller('S3Ctrl', ['$scope', 'user', 's3Service', 'dragAndDrop', 
+  function($scope, user, s3Service, dragAndDrop){
+
+    $scope.$on('user::loggedIn', function() {    
+      $scope.isLoggedIn = user.getLoginStatus();
+    });
+
+    $scope.$on('s3creds::changed', function() {
+      $scope.creds = s3Service.getCreds();
+      s3 = new AWS.S3({ params:{ Bucket: $scope.creds.bucket }})
+      $scope.retrieveBucketFiles();
+      $scope.orderProp = '-LastModified';
+    });
 
     //------------------------------------------------------
     // CRUD ACTIONS
@@ -358,15 +373,14 @@ yhControllers.controller('MainCtrl', ['$scope', 'user', 'dragAndDrop', 's3Servic
         if (err) { console.log(err); }  // error occurred
         else {
 
-          // if file retrieval successful, signify logged in
+          // sign in user if not already logged in
           if( !user.getLoginStatus() ){
                user.setLoginToTrue();
-            $scope.orderProp = '-LastModified';
+               dragAndDrop.activate();
           }
 
           // add S3 bucket files to $scope.files and update view
           $scope.files = data.Contents;
-          dragAndDrop.activate();
           $scope.$apply();
         }
       })
@@ -472,17 +486,6 @@ yhControllers.controller('MainCtrl', ['$scope', 'user', 'dragAndDrop', 's3Servic
     $scope.stopEditing = function() {
       $scope.oldFileName = null;
     }
-
-    $scope.$on('user::loggedIn', function() {
-      $scope.isLoggedIn = user.getLoginStatus();
-    });
-
-    $scope.$on('s3creds::changed', function() {
-      $scope.creds = s3Service.getCreds();
-      s3 = new AWS.S3({ params:{ Bucket: $scope.creds.bucket }})
-      $scope.retrieveBucketFiles();
-      $scope.orderProp = '-LastModified';
-    });
 }]);;
 'use strict';
 
