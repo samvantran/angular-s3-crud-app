@@ -22,7 +22,6 @@ yhControllers.controller('S3Ctrl', ['$scope', 'user', 's3Service', 'dragAndDrop'
       $scope.creds = s3Service.getCreds();
       s3 = new AWS.S3({ params:{ Bucket: $scope.creds.bucket }})
       $scope.retrieveBucketFiles();
-      $scope.orderProp = '-LastModified';
     });
 
     //------------------------------------------------------
@@ -45,6 +44,7 @@ yhControllers.controller('S3Ctrl', ['$scope', 'user', 's3Service', 'dragAndDrop'
 
           // add S3 bucket files to $scope.files and update view
           $scope.files = data.Contents;
+          $scope.orderProp ? $scope.orderProp : $scope.orderProp = '-LastModified';
           $scope.$apply();
         }
       })
@@ -108,7 +108,6 @@ yhControllers.controller('S3Ctrl', ['$scope', 'user', 's3Service', 'dragAndDrop'
       }, function(err, data){
         if (err) console.log(err);
       })
-
     } // end of editFileName()
 
     $scope.deleteFileFromS3 = function(file) {

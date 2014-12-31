@@ -358,7 +358,6 @@ yhControllers.controller('S3Ctrl', ['$scope', 'user', 's3Service', 'dragAndDrop'
       $scope.creds = s3Service.getCreds();
       s3 = new AWS.S3({ params:{ Bucket: $scope.creds.bucket }})
       $scope.retrieveBucketFiles();
-      $scope.orderProp = '-LastModified';
     });
 
     //------------------------------------------------------
@@ -381,6 +380,7 @@ yhControllers.controller('S3Ctrl', ['$scope', 'user', 's3Service', 'dragAndDrop'
 
           // add S3 bucket files to $scope.files and update view
           $scope.files = data.Contents;
+          $scope.orderProp ? $scope.orderProp : $scope.orderProp = '-LastModified';
           $scope.$apply();
         }
       })
@@ -444,7 +444,6 @@ yhControllers.controller('S3Ctrl', ['$scope', 'user', 's3Service', 'dragAndDrop'
       }, function(err, data){
         if (err) console.log(err);
       })
-
     } // end of editFileName()
 
     $scope.deleteFileFromS3 = function(file) {
@@ -513,48 +512,6 @@ angular.module('yhFilters', []).filter('sizeCheck', function() {
 });;
 var yhServices = angular.module('yhServices', []);
 
-yhServices.service('dragAndDrop', function() {
-  return {
-    activate: function() {
-      var dropbox, inputbox;
-
-      dropbox = document.getElementById("dropbox");
-      input = document.getElementById('fileUpload');
-      dropbox.addEventListener("dragenter", dragenter, false);
-      dropbox.addEventListener("dragover", dragover, false);
-      dropbox.addEventListener("dragleave", dragleave, false);
-      dropbox.addEventListener("drop", drop, false);
-
-      function dragenter (e) {
-        e.stopPropagation();
-        e.preventDefault();
-      }
-
-      function dragover(e) {
-        e.stopPropagation();
-        e.preventDefault();
-        dropbox.style.border = '5px dashed green';
-      }
-
-      function dragleave(e) {
-        e.stopPropagation();
-        e.preventDefault();
-        dropbox.style.border = '5px dashed black';
-      }
-
-      function drop(e) {
-        e.stopPropagation();
-        e.preventDefault();
-
-        var dt = e.dataTransfer;
-        var files = dt.files;
-        input.files[0] = files[0];
-        dropbox.innerHTML = '<h2>' + files[0].name + '</h2>';
-      }
-    }
-  }
-});
-
 yhServices.service('user', ['$rootScope', function($rootScope) {
   this.login = { status: false };
   var self = this;
@@ -612,4 +569,46 @@ yhServices.service('uploadForm', function() {
       }, 2500);
     }
   };
+});
+
+yhServices.service('dragAndDrop', function() {
+  return {
+    activate: function() {
+      var dropbox, inputbox;
+
+      dropbox = document.getElementById("dropbox");
+      input = document.getElementById('fileUpload');
+      dropbox.addEventListener("dragenter", dragenter, false);
+      dropbox.addEventListener("dragover", dragover, false);
+      dropbox.addEventListener("dragleave", dragleave, false);
+      dropbox.addEventListener("drop", drop, false);
+
+      function dragenter (e) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+
+      function dragover(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        dropbox.style.border = '5px dashed green';
+      }
+
+      function dragleave(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        dropbox.style.border = '5px dashed black';
+      }
+
+      function drop(e) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        var dt = e.dataTransfer;
+        var files = dt.files;
+        input.files[0] = files[0];
+        dropbox.innerHTML = '<h2>' + files[0].name + '</h2>';
+      }
+    }
+  }
 });
