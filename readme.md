@@ -1,7 +1,28 @@
-# Yellowhammer Code Test Flight
+# Angular S3 CRUD app
+
 ![sweet picture](http://img1.wikia.nocookie.net/__cb20131125081250/steamtradingcards/images/thumb/b/b5/Gun_Monkeys_Artwork_1.jpg/800px-Gun_Monkeys_Artwork_1.jpg)
 
 _artist: Michael Firman http://www.firmanproductions.com/_
+
+As part of a code challenge, I built an AngularJS CRUD app connected to S3. I spent 7 days on it. At the time, I had no dev experience with Angular or S3. I successfully completed the challenge thanks to Google, StackOverflow, a handful of Angular tutorials, and my own experimentation.
+
+My application can:
+
+- CRUD files to S3
+- sort files based on size, name, and last modified
+- filter files by text search
+- drag and drop files to upload
+
+The application also includes:
+
+- a Grunt build for concatenation and minifying
+- some (very weak and lame) Karma/Protractor tests
+
+You'll need S3 credentials to interact with the app. If you don't have any, you can view a demo of the app in action here: [http://youtu.be/EuXg0QgGEoM](http://youtu.be/EuXg0QgGEoM)
+
+Below are the code challenge requirements the company sent me.
+
+---
 
 We're looking for full-stack developers that are hungry to learn and can deliver functioning products. You got this far because we think you have those qualities, so now it's time to prove it. Your task is to write a simple AngularJS application that allows CRUD (create, read, update, delete). You can use the skeleton provided here (but please make a new repository instead of forking this one) or start from scratch. 
 
@@ -23,7 +44,7 @@ This should be a challenging exercise on its own, but if you are absolutely crus
   - extra features -- sorting (by file name, file size, file type, etc); allow a user to add category to their upload and to organize their list by categories; drag-and-drop; file preview thumbnails; something else you think would be cool!
   - put it in a Docker image: [https://docs.docker.com/](https://docs.docker.com/)
 
-It's very likely that you can learn the required Angular in a couple of hours. We want to respect your time, so we'll take a look at incomplete submissions. Code quality matters a lot more than code quantity. The end goal is a product that works and is easy to use. By the way, this is a simplified version of a real task that we are currently working on, so hopefully this gives you an idea of whether you'd like coming to work at Yellowhammer. 
+It's very likely that you can learn the required Angular in a couple of hours. We want to respect your time, so we'll take a look at incomplete submissions. Code quality matters a lot more than code quantity. The end goal is a product that works and is easy to use. By the way, this is a simplified version of a real task that we are currently working on, so hopefully this gives you an idea of whether you'd like coming to work at Company. 
 
 ---------------
 ## What We're Looking For (roughly in order of importance)
@@ -112,4 +133,3 @@ A question to think about: what if we want to change our service provider? How c
 - Egghead.io Angular screencasts: [https://egghead.io/series/angularjs-app-from-scratch-getting-started](https://egghead.io/series/angularjs-app-from-scratch-getting-started)
 - npm: [npmjs.org](https://www.npmjs.org). Use libraries. Find the right tool for the job.
 - AWS Javascript SDK: [http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html](http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html). Go nuts.
-- we welcome questions: Joe / joconor@yhmg.com, James / jtong@yhmg.com
