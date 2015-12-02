@@ -28,7 +28,7 @@
             <th>File Type</th>
             <th>Size</th>
             <th>> 15 MB ?</th>
-            <th>Date Modified</th>
+            <th>Date Added</th>
             <th>Download</th>
             <th>Delete</th>
           </tr>
@@ -46,7 +46,7 @@
             <th>{{ (file.Size / 1000000).toFixed(3) }} MB</th>
             <th>{{ (file.Size / 1000000) > 15 | sizeCheck }}</th>
             <th>{{ (file.LastModified).toString().slice(0, 15)}}</th>
-            <th><a href="http://yh.interview.s3.amazonaws.com/{{file.Key}}"><button type="button" class="btn btn-link"><span class="glyphicon glyphicon-download-alt"></span></button></a></th>
+            <th><a href="http://{{creds.bucket}}.s3.amazonaws.com/{{file.Key}}"><button type="button" class="btn btn-link"><span class="glyphicon glyphicon-download-alt"></span></button></a></th>
             <th><button type="button" ng-click="deleteFileFromS3(file)" class="close">&times;</button></th>
           </tr>
         </tbody>

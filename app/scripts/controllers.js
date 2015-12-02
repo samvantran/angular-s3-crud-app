@@ -95,7 +95,7 @@ yhControllers.controller('S3Ctrl', ['$scope', 'user', 's3Service', 'dragAndDrop'
         else {
           // copy file and PUT it back to S3 with new name
           fileCopy = data;
-          s3.putObject({ 
+          s3.upload({
             Key: $scope.creds.prefix + '/' + $scope.newFileName, 
             ACL: "public-read", 
             Body: fileCopy.Body 
