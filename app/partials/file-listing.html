@@ -25,6 +25,7 @@
           <tr>
             <th>File Name</th>
             <th>Rename <span class="glyphicon glyphicon-question-sign" title="Due to the nature of AWS S3, renaming a file may take longer than expected. Please be patient."></span></th>
+            <th>File Type</th>
             <th>Size</th>
             <th>> 15 MB ?</th>
             <th>Date Modified</th>
@@ -39,8 +40,9 @@
               <input type="text" name="text" ng-model="newFileName">
               <a ng-click="stopEditing()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a>
             </form>
-            <p ng-hide="isEditing(file.Key)">{{ (file.Key).toString().slice(8, (file.Key).length)}}</p></th>
+            <p ng-hide="isEditing(file.Key)">{{ file.Key }}</p></th>
             <th><button type="button" ng-click="showEditForm(file.Key)" class="btn btn-link"><span class="glyphicon glyphicon-pencil"></span></button></th>
+            <th>{{ (file.Key).match('[.][A-z]+.+')[0].substring(1).toUpperCase() }} </th>
             <th>{{ (file.Size / 1000000).toFixed(3) }} MB</th>
             <th>{{ (file.Size / 1000000) > 15 | sizeCheck }}</th>
             <th>{{ (file.LastModified).toString().slice(0, 15)}}</th>

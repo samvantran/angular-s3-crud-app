@@ -12,16 +12,21 @@ yhControllers.controller('LoginCtrl', ['$scope', 'user', 's3Service',
 }]);
 
 yhControllers.controller('S3Ctrl', ['$scope', 'user', 's3Service', 'dragAndDrop', 'uploadForm',
-  function($scope, user, s3Service, dragAndDrop, uploadForm){
+  function($scope, user, s3Service, dragAndDrop, uploadForm) {
 
-    $scope.$on('user::loggedIn', function() {    
+    $scope.$on('user::loggedIn', function() {
       $scope.isLoggedIn = user.getLoginStatus();
     });
 
     $scope.$on('s3creds::changed', function() {
       $scope.creds = s3Service.getCreds();
-      s3 = new AWS.S3({ params:{ Bucket: $scope.creds.bucket }})
-      $scope.retrieveBucketFiles();
+      if ($scope.creds.prefix == "svt") {
+        s3 = new AWS.S3({
+          params:{ Bucket: $scope.creds.bucket },
+          apiVersion: '2006-03-01'
+        })
+        $scope.retrieveBucketFiles();
+      }
     });
 
     //------------------------------------------------------
@@ -54,10 +59,10 @@ yhControllers.controller('S3Ctrl', ['$scope', 'user', 's3Service', 'dragAndDrop'
       $scope.uploadProgress = 0;
       var file = document.getElementById('fileUpload').files[0];
       
-      s3.putObject({
+      s3.upload({
         // required fields to access S3 bucket
         Key:  $scope.creds.prefix + '/' + file.name,  // ex. johndoe/file.jpg
-        Body: file,
+        Body: stream,
         ACL:  "public-read"
       }, function(err, data) {
         if (err) { console.log(err); } // error ocurred
@@ -66,7 +71,7 @@ yhControllers.controller('S3Ctrl', ['$scope', 'user', 's3Service', 'dragAndDrop'
           $scope.retrieveBucketFiles();
         }
       }) // this is what updates the progress bar live
-      .on('httpUploadProgress',function(progress) {
+      .on('httpUploadProgress', function(progress) {
         $scope.uploadProgress = Math.round(progress.loaded / progress.total * 100);
         $scope.$digest();
       });
@@ -131,7 +136,7 @@ yhControllers.controller('S3Ctrl', ['$scope', 'user', 's3Service', 'dragAndDrop'
     $scope.oldFileName = null;
 
     $scope.showEditForm = function(currentFileName) {
-      $scope.newFileName = currentFileName.slice(8, (currentFileName).length);
+      $scope.newFileName = currentFileName;
       $scope.oldFileName = currentFileName;
     }
 
