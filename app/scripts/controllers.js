@@ -20,13 +20,11 @@ yhControllers.controller('S3Ctrl', ['$scope', 'user', 's3Service', 'dragAndDrop'
 
     $scope.$on('s3creds::changed', function() {
       $scope.creds = s3Service.getCreds();
-      if ($scope.creds.prefix == "svt") {
-        s3 = new AWS.S3({
-          params:{ Bucket: $scope.creds.bucket },
-          apiVersion: '2006-03-01'
-        })
-        $scope.retrieveBucketFiles();
-      }
+      s3 = new AWS.S3({
+        params:{ Bucket: $scope.creds.bucket },
+        apiVersion: '2006-03-01'
+      })
+      $scope.retrieveBucketFiles();
     });
 
     //------------------------------------------------------
